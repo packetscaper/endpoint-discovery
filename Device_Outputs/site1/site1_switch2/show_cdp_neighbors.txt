@@ -1,0 +1,12 @@
+site1_switch2> show cdp neighbor
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+alp-swi01.ra.rockwell.com
+                 Ten 1/1/4         132             R S I  WS-C3850- Ten 1/1/4
+alp-swi01.ra.rockwell.com
+                 Ten 1/1/3         163             R S I  WS-C3850- Ten 1/1/3
+
+Total cdp entries displayed : 2

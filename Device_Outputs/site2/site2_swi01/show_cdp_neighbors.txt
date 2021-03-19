@@ -1,0 +1,26 @@
+site2_swi01# show cdp neighbor 
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+SEP0004f2eba10a  Gig 2/0/8         151              H P   IP Phone  port 1
+SEP0015FAFE455A  Gig 1/0/41        120             H P M  IP Phone  Port 1
+SEP0015FAFE44D6  Gig 1/0/14        166             H P M  IP Phone  Port 1
+SEP0015FAFE43C7  Gig 1/0/18        155             H P M  IP Phone  Port 1
+SEP0015FAFE44C2  Gig 1/0/34        146             H P M  IP Phone  Port 1
+SEPAC44F2172582  Gig 1/0/20        179              H P   IP Phone  Port 1
+SEP0015FAFE448E  Gig 1/0/10        132             H P M  IP Phone  Port 1
+lou-wap01        Gig 2/0/46        134             T B I  AIR-CAP37 Gig 0
+lou-wap03        Gig 2/0/48        155             T B I  AIR-CAP37 Gig 0
+lou-wap02        Gig 2/0/47        125             T B I  AIR-CAP37 Gig 0
+SEP0015FAFE4435  Gig 1/0/33        165             H P M  IP Phone  Port 1
+SEPAC44F21725F6  Gig 1/0/30        166              H P   IP Phone  Port 1
+SEP0015FAFE43BD  Gig 1/0/16        142             H P M  IP Phone  Port 1
+SEP001646429848  Gig 1/0/15        142             H P M  IP Phone  Port 1
+SEP0015FAFE4558  Gig 1/0/36        155             H P M  IP Phone  Port 1
+SEP0015FAFE4539  Gig 1/0/44        140             H P M  IP Phone  Port 1
+lou-rtr01.ra.rockwell.com
+                 Gig 1/0/1         134             R S I  ISR4331/K Gig 0/0/0
+
+Total cdp entries displayed : 17

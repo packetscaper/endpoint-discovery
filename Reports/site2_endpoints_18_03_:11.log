@@ -1,0 +1,583 @@
+--------------------------------------------------------------------------------------------------------------------- 
+Fetching mac address table and CDP neighbors from site2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Parsing show mac address-table from site2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+{'mac_table': {'vlans': {'1': {'mac_addresses': {'0056.2b72.9747': {'interfaces': {'Vlan1': {'entry_type': 'static',
+                                                                                             'interface': 'Vlan1'}},
+                                                                    'mac_address': '0056.2b72.9747'}},
+                               'vlan': 1},
+                         '101': {'mac_addresses': {'0004.f2eb.a10a': {'interfaces': {'GigabitEthernet2/0/8': {'entry_type': 'static',
+                                                                                                              'interface': 'GigabitEthernet2/0/8'}},
+                                                                      'mac_address': '0004.f2eb.a10a'},
+                                                   '0015.fafe.43bd': {'interfaces': {'GigabitEthernet1/0/16': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/16'}},
+                                                                      'mac_address': '0015.fafe.43bd'},
+                                                   '0015.fafe.43c7': {'interfaces': {'GigabitEthernet1/0/18': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/18'}},
+                                                                      'mac_address': '0015.fafe.43c7'},
+                                                   '0015.fafe.4435': {'interfaces': {'GigabitEthernet1/0/33': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/33'}},
+                                                                      'mac_address': '0015.fafe.4435'},
+                                                   '0015.fafe.448e': {'interfaces': {'GigabitEthernet1/0/10': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/10'}},
+                                                                      'mac_address': '0015.fafe.448e'},
+                                                   '0015.fafe.44c2': {'interfaces': {'GigabitEthernet1/0/34': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/34'}},
+                                                                      'mac_address': '0015.fafe.44c2'},
+                                                   '0015.fafe.44d6': {'interfaces': {'GigabitEthernet1/0/14': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/14'}},
+                                                                      'mac_address': '0015.fafe.44d6'},
+                                                   '0015.fafe.4539': {'interfaces': {'GigabitEthernet1/0/44': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/44'}},
+                                                                      'mac_address': '0015.fafe.4539'},
+                                                   '0015.fafe.4558': {'interfaces': {'GigabitEthernet1/0/36': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/36'}},
+                                                                      'mac_address': '0015.fafe.4558'},
+                                                   '0015.fafe.455a': {'interfaces': {'GigabitEthernet1/0/41': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/41'}},
+                                                                      'mac_address': '0015.fafe.455a'},
+                                                   '0016.4642.9848': {'interfaces': {'GigabitEthernet1/0/15': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/15'}},
+                                                                      'mac_address': '0016.4642.9848'},
+                                                   '0056.2b72.9741': {'interfaces': {'Vlan101': {'entry_type': 'static',
+                                                                                                 'interface': 'Vlan101'}},
+                                                                      'mac_address': '0056.2b72.9741'},
+                                                   'ac44.f217.2582': {'interfaces': {'GigabitEthernet1/0/20': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/20'}},
+                                                                      'mac_address': 'ac44.f217.2582'},
+                                                   'ac44.f217.25f6': {'interfaces': {'GigabitEthernet1/0/30': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet1/0/30'}},
+                                                                      'mac_address': 'ac44.f217.25f6'}},
+                                 'vlan': 101},
+                         '201': {'mac_addresses': {'001b.d880.b057': {'interfaces': {'GigabitEthernet2/0/17': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet2/0/17'}},
+                                                                      'mac_address': '001b.d880.b057'},
+                                                   '001b.d880.b05c': {'interfaces': {'GigabitEthernet2/0/17': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet2/0/17'}},
+                                                                      'mac_address': '001b.d880.b05c'},
+                                                   '001b.d880.d79a': {'interfaces': {'GigabitEthernet2/0/17': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet2/0/17'}},
+                                                                      'mac_address': '001b.d880.d79a'},
+                                                   '0040.8421.2067': {'interfaces': {'GigabitEthernet2/0/17': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet2/0/17'}},
+                                                                      'mac_address': '0040.8421.2067'},
+                                                   '0056.2b72.974c': {'interfaces': {'Vlan201': {'entry_type': 'static',
+                                                                                                 'interface': 'Vlan201'}},
+                                                                      'mac_address': '0056.2b72.974c'},
+                                                   '5838.791f.3e3c': {'interfaces': {'GigabitEthernet2/0/2': {'entry_type': 'static',
+                                                                                                              'interface': 'GigabitEthernet2/0/2'}},
+                                                                      'mac_address': '5838.791f.3e3c'},
+                                                   'd8cb.8aa2.1ce5': {'interfaces': {'GigabitEthernet2/0/17': {'entry_type': 'static',
+                                                                                                               'interface': 'GigabitEthernet2/0/17'}},
+                                                                      'mac_address': 'd8cb.8aa2.1ce5'},
+                                                   'e00e.da37.14cc': {'interfaces': {'GigabitEthernet2/0/47': {'entry_type': 'dynamic',
+                                                                                                               'interface': 'GigabitEthernet2/0/47'}},
+                                                                      'mac_address': 'e00e.da37.14cc'},
+                                                   'e00e.da37.15b8': {'interfaces': {'GigabitEthernet2/0/48': {'entry_type': 'dynamic',
+                                                                                                               'interface': 'GigabitEthernet2/0/48'}},
+                                                                      'mac_address': 'e00e.da37.15b8'},
+                                                   'e00e.da70.1c48': {'interfaces': {'GigabitEthernet2/0/46': {'entry_type': 'dynamic',
+                                                                                                               'interface': 'GigabitEthernet2/0/46'}},
+                                                                      'mac_address': 'e00e.da70.1c48'},
+                                                   'e898.6d89.7900': {'interfaces': {'GigabitEthernet2/0/13': {'entry_type': 'dynamic',
+                                                                                                               'interface': 'GigabitEthernet2/0/13'}},
+                                                                      'mac_address': 'e898.6d89.7900'},
+                                                   'e898.6d89.7910': {'interfaces': {'GigabitEthernet1/0/8': {'entry_type': 'dynamic',
+                                                                                                              'interface': 'GigabitEthernet1/0/8'}},
+                                                                      'mac_address': 'e898.6d89.7910'}},
+                                 'vlan': 201},
+                         'all': {'mac_addresses': {'0100.0ccc.cccc': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0100.0ccc.cccc'},
+                                                   '0100.0ccc.cccd': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0100.0ccc.cccd'},
+                                                   '0100.0ccc.ccce': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0100.0ccc.ccce'},
+                                                   '0180.c200.0000': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0000'},
+                                                   '0180.c200.0001': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0001'},
+                                                   '0180.c200.0002': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0002'},
+                                                   '0180.c200.0003': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0003'},
+                                                   '0180.c200.0004': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0004'},
+                                                   '0180.c200.0005': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0005'},
+                                                   '0180.c200.0006': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0006'},
+                                                   '0180.c200.0007': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0007'},
+                                                   '0180.c200.0008': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0008'},
+                                                   '0180.c200.0009': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0009'},
+                                                   '0180.c200.000a': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000a'},
+                                                   '0180.c200.000b': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000b'},
+                                                   '0180.c200.000c': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000c'},
+                                                   '0180.c200.000d': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000d'},
+                                                   '0180.c200.000e': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000e'},
+                                                   '0180.c200.000f': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.000f'},
+                                                   '0180.c200.0010': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': '0180.c200.0010'},
+                                                   'ffff.ffff.ffff': {'interfaces': {'CPU': {'entry_type': 'static',
+                                                                                             'interface': 'CPU'}},
+                                                                      'mac_address': 'ffff.ffff.ffff'}},
+                                 'vlan': 'all'}}},
+ 'total_mac_addresses': 48}
+
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Parsing show cdp neighbor from site2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+printing cdp neighbor
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+{'cdp': {'index': {1: {'capability': 'H P   IP',
+                       'device_id': 'SEP0004f2eba10a',
+                       'hold_time': 151,
+                       'local_interface': 'GigabitEthernet2/0/8',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   2: {'capability': 'H P M  IP',
+                       'device_id': 'SEP0015FAFE455A',
+                       'hold_time': 120,
+                       'local_interface': 'GigabitEthernet1/0/41',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   3: {'capability': 'H P M  IP',
+                       'device_id': 'SEP0015FAFE44D6',
+                       'hold_time': 166,
+                       'local_interface': 'GigabitEthernet1/0/14',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   4: {'capability': 'H P M  IP',
+                       'device_id': 'SEP0015FAFE43C7',
+                       'hold_time': 155,
+                       'local_interface': 'GigabitEthernet1/0/18',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   5: {'capability': 'H P M  IP',
+                       'device_id': 'SEP0015FAFE44C2',
+                       'hold_time': 146,
+                       'local_interface': 'GigabitEthernet1/0/34',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   6: {'capability': 'H P   IP',
+                       'device_id': 'SEPAC44F2172582',
+                       'hold_time': 179,
+                       'local_interface': 'GigabitEthernet1/0/20',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   7: {'capability': 'H P M  IP',
+                       'device_id': 'SEP0015FAFE448E',
+                       'hold_time': 132,
+                       'local_interface': 'GigabitEthernet1/0/10',
+                       'platform': 'Phone',
+                       'port_id': 'Port1'},
+                   8: {'capability': 'T B I',
+                       'device_id': 'lou-wap01',
+                       'hold_time': 134,
+                       'local_interface': 'GigabitEthernet2/0/46',
+                       'platform': 'AIR-CAP37',
+                       'port_id': 'GigabitEthernet0'},
+                   9: {'capability': 'T B I',
+                       'device_id': 'lou-wap03',
+                       'hold_time': 155,
+                       'local_interface': 'GigabitEthernet2/0/48',
+                       'platform': 'AIR-CAP37',
+                       'port_id': 'GigabitEthernet0'},
+                   10: {'capability': 'T B I',
+                        'device_id': 'lou-wap02',
+                        'hold_time': 125,
+                        'local_interface': 'GigabitEthernet2/0/47',
+                        'platform': 'AIR-CAP37',
+                        'port_id': 'GigabitEthernet0'},
+                   11: {'capability': 'H P M  IP',
+                        'device_id': 'SEP0015FAFE4435',
+                        'hold_time': 165,
+                        'local_interface': 'GigabitEthernet1/0/33',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   12: {'capability': 'H P   IP',
+                        'device_id': 'SEPAC44F21725F6',
+                        'hold_time': 166,
+                        'local_interface': 'GigabitEthernet1/0/30',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   13: {'capability': 'H P M  IP',
+                        'device_id': 'SEP0015FAFE43BD',
+                        'hold_time': 142,
+                        'local_interface': 'GigabitEthernet1/0/16',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   14: {'capability': 'H P M  IP',
+                        'device_id': 'SEP001646429848',
+                        'hold_time': 142,
+                        'local_interface': 'GigabitEthernet1/0/15',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   15: {'capability': 'H P M  IP',
+                        'device_id': 'SEP0015FAFE4558',
+                        'hold_time': 155,
+                        'local_interface': 'GigabitEthernet1/0/36',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   16: {'capability': 'H P M  IP',
+                        'device_id': 'SEP0015FAFE4539',
+                        'hold_time': 140,
+                        'local_interface': 'GigabitEthernet1/0/44',
+                        'platform': 'Phone',
+                        'port_id': 'Port1'},
+                   17: {'capability': 'R S I',
+                        'device_id': 'lou-rtr01.ra.rockwell.com',
+                        'hold_time': 134,
+                        'local_interface': 'GigabitEthernet1/0/1',
+                        'platform': 'ISR4331/K',
+                        'port_id': 'GigabitEthernet0/0/0'}}}}
+
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for e00e.da37.14ccas AIR-CAP37
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for e00e.da37.15b8as AIR-CAP37
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for e00e.da70.1c48as AIR-CAP37
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0004.f2eb.a10aas Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.43bdas Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.43c7as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.4435as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.448eas Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.44c2as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.44d6as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.4539as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.4558as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0015.fafe.455aas Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for 0016.4642.9848as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for ac44.f217.2582as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating cdp information for ac44.f217.25f6as Phone
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updated Layer 2 Information from site2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Fetching layer 3 info fromsite2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+{'global_static_table': {'10.84.255.223': {'age': '0',
+                                           'encap_type': 'ARPA',
+                                           'ip_address': '10.84.255.223',
+                                           'mac_address': 'Incomplete',
+                                           'protocol': 'Internet'}},
+ 'interfaces': {'GigabitEthernet1/0/1': {'ipv4': {'neighbors': {'10.88.0.117': {'age': '164',
+                                                                                'ip': '10.88.0.117',
+                                                                                'link_layer_address': '0462.7397.7830',
+                                                                                'origin': 'dynamic',
+                                                                                'protocol': 'Internet',
+                                                                                'type': 'ARPA'},
+                                                                '10.88.0.118': {'age': '-',
+                                                                                'ip': '10.88.0.118',
+                                                                                'link_layer_address': '0056.2b72.9764',
+                                                                                'origin': 'static',
+                                                                                'protocol': 'Internet',
+                                                                                'type': 'ARPA'}}}},
+                'Vlan101': {'ipv4': {'neighbors': {'10.84.253.1': {'age': '-',
+                                                                   'ip': '10.84.253.1',
+                                                                   'link_layer_address': '0056.2b72.9741',
+                                                                   'origin': 'static',
+                                                                   'protocol': 'Internet',
+                                                                   'type': 'ARPA'},
+                                                   '10.84.253.128': {'age': '0',
+                                                                     'ip': '10.84.253.128',
+                                                                     'link_layer_address': '0016.4642.9848',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.129': {'age': '0',
+                                                                     'ip': '10.84.253.129',
+                                                                     'link_layer_address': '0015.fafe.44d6',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.134': {'age': '0',
+                                                                     'ip': '10.84.253.134',
+                                                                     'link_layer_address': '0015.fafe.44c2',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.152': {'age': '0',
+                                                                     'ip': '10.84.253.152',
+                                                                     'link_layer_address': '0015.fafe.4539',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.155': {'age': '0',
+                                                                     'ip': '10.84.253.155',
+                                                                     'link_layer_address': '0015.fafe.4435',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.23': {'age': '0',
+                                                                    'ip': '10.84.253.23',
+                                                                    'link_layer_address': '0015.fafe.43c7',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.253.244': {'age': '0',
+                                                                     'ip': '10.84.253.244',
+                                                                     'link_layer_address': '0015.fafe.448e',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.247': {'age': '0',
+                                                                     'ip': '10.84.253.247',
+                                                                     'link_layer_address': '0015.fafe.4558',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.248': {'age': '0',
+                                                                     'ip': '10.84.253.248',
+                                                                     'link_layer_address': '0015.fafe.455a',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.253.25': {'age': '0',
+                                                                    'ip': '10.84.253.25',
+                                                                    'link_layer_address': '0015.fafe.43bd',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.253.33': {'age': '0',
+                                                                    'ip': '10.84.253.33',
+                                                                    'link_layer_address': '0004.f2eb.a10a',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.253.59': {'age': '0',
+                                                                    'ip': '10.84.253.59',
+                                                                    'link_layer_address': 'ac44.f217.25f6',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.253.63': {'age': '0',
+                                                                    'ip': '10.84.253.63',
+                                                                    'link_layer_address': 'ac44.f217.2582',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'}}}},
+                'Vlan201': {'ipv4': {'neighbors': {'10.84.254.1': {'age': '-',
+                                                                   'ip': '10.84.254.1',
+                                                                   'link_layer_address': '0056.2b72.974c',
+                                                                   'origin': 'static',
+                                                                   'protocol': 'Internet',
+                                                                   'type': 'ARPA'},
+                                                   '10.84.254.14': {'age': '0',
+                                                                    'ip': '10.84.254.14',
+                                                                    'link_layer_address': '5838.791f.3e3c',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.16': {'age': '0',
+                                                                    'ip': '10.84.254.16',
+                                                                    'link_layer_address': '001b.d880.b057',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.17': {'age': '0',
+                                                                    'ip': '10.84.254.17',
+                                                                    'link_layer_address': '001b.d880.b05c',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.18': {'age': '0',
+                                                                    'ip': '10.84.254.18',
+                                                                    'link_layer_address': '001b.d880.d79a',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.19': {'age': '0',
+                                                                    'ip': '10.84.254.19',
+                                                                    'link_layer_address': 'd8cb.8aa2.1ce5',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.20': {'age': '0',
+                                                                    'ip': '10.84.254.20',
+                                                                    'link_layer_address': '0040.8421.2067',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.254.215': {'age': '0',
+                                                                     'ip': '10.84.254.215',
+                                                                     'link_layer_address': 'e00e.da70.1c48',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.255.247': {'age': '164',
+                                                                     'ip': '10.84.255.247',
+                                                                     'link_layer_address': 'e898.6d89.7900',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.255.248': {'age': '1',
+                                                                     'ip': '10.84.255.248',
+                                                                     'link_layer_address': 'e898.6d89.7910',
+                                                                     'origin': 'dynamic',
+                                                                     'protocol': 'Internet',
+                                                                     'type': 'ARPA'},
+                                                   '10.84.255.36': {'age': '0',
+                                                                    'ip': '10.84.255.36',
+                                                                    'link_layer_address': 'e00e.da37.15b8',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'},
+                                                   '10.84.255.52': {'age': '0',
+                                                                    'ip': '10.84.255.52',
+                                                                    'link_layer_address': 'e00e.da37.14cc',
+                                                                    'origin': 'dynamic',
+                                                                    'protocol': 'Internet',
+                                                                    'type': 'ARPA'}}}}}}
+
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Updating layer 3 info from site2_swi01
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 001b.d880.b057=====>10.84.254.16 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 001b.d880.b05c=====>10.84.254.17 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 001b.d880.d79a=====>10.84.254.18 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0040.8421.2067=====>10.84.254.20 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0056.2b72.974c=====>10.84.254.1 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 5838.791f.3e3c=====>10.84.254.14 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of d8cb.8aa2.1ce5=====>10.84.254.19 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of e00e.da37.14cc=====>10.84.255.52 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of e00e.da37.15b8=====>10.84.255.36 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of e00e.da70.1c48=====>10.84.254.215 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of e898.6d89.7900=====>10.84.255.247 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of e898.6d89.7910=====>10.84.255.248 in Vlan201
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0004.f2eb.a10a=====>10.84.253.33 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.43bd=====>10.84.253.25 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.43c7=====>10.84.253.23 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.4435=====>10.84.253.155 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.448e=====>10.84.253.244 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.44c2=====>10.84.253.134 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.44d6=====>10.84.253.129 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.4539=====>10.84.253.152 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.4558=====>10.84.253.247 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0015.fafe.455a=====>10.84.253.248 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0016.4642.9848=====>10.84.253.128 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of 0056.2b72.9741=====>10.84.253.1 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of ac44.f217.2582=====>10.84.253.63 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+Found IP of ac44.f217.25f6=====>10.84.253.59 in Vlan101
+---------------------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------------------- 
+writing all endpoints to endpoints.csv
+---------------------------------------------------------------------------------------------------------------------- 

@@ -1,0 +1,23 @@
+---
+
+sites:
+  site1:
+     devices:
+         l3_hops:
+           - hostname: site1_switch1
+         l2_switches:
+           - hostname: site1_switch1
+             trunks_to_ignore_for_mac_learn:
+                - Port-Channel1
+           - hostname: site1_switch2
+             trunks_to_ignore_for_mac_learn:
+              - Port-Channel1
+
+  site2:
+      devices:
+         l3_hops:
+           - hostname: site2_swi01
+         l2_switches:
+           - hostname: site2_swi01
+             trunks_to_ignore_for_mac_learn:
+                - N/A
