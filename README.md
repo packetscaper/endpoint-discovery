@@ -61,11 +61,13 @@ sites:
 In the folder Device_Outputs create a folder per site. The folder name should match the site names in the topology.yaml file.
 Each site folder will contain files names as below with the outputs from the device. 
 
-l2_switches  
+l2_switches 
+ 
     - show_mac_address-table.txt
     - show_cdp_neighbors.txt
 
 l3_hops
+
     - show_arp.txt
     
     
