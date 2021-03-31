@@ -184,28 +184,26 @@ class Switch():
 
 
     def get_cdp_neighbors(self):
-         #try:
-         log("Parsing show cdp neighbor from " + self.hostname)
-         file_location = 'configs/'+self.hostname+'/show_cdp_neighbors.txt'
-         #with open(device_folder + '/' + self.hostname + '/show_cdp_neighbors.txt', ) as f:
-         with open(device_folder + '/'+self.hostname +'/show_cdp_neighbors.txt',encoding='utf8',errors='ignore') as f:
-         #with open(device_folder + '/'+self.hostname + '/show_cdp_neighbors.txt', newline='', encoding='utf16') as f:
-            data = f.read()
-         log("printing cdp neighbor")
-         #log(data)
-         parsed_output = self.dev.parse('show cdp neighbor',output=data)
-         #pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
-         log(parsed_output)
-         for endpoint in self.endpoints:
-           for cdp_neighbor_index, cdp_neighbor_data in parsed_output['cdp']['index'].items():
-             if cdp_neighbor_data['local_interface'] == endpoint.interface:
-
-
-                 endpoint.cdp_platform = cdp_neighbor_data['platform']
-                 endpoint.cdp_hostname = cdp_neighbor_data['device_id']
-                 log("Updating cdp information for " + endpoint.mac + "as " + endpoint.cdp_platform)
-         #except :
-         #   print("Found Exception ")
+        try:
+            log("Parsing show cdp neighbor from " + self.hostname)
+            file_location = 'configs/' + self.hostname + '/show_cdp_neighbors.txt'
+            with open(device_folder + '/' + self.hostname + '/show_cdp_neighbors.txt') as f:
+                # with open(device_folder + '/'+self.hostname + '/show_cdp_neighbors.txt', newline='', encoding='utf16') as f:
+                data = f.read()
+            log("printing cdp neighbor")
+            # log(data)
+            parsed_output = self.dev.parse('show cdp neighbor', output=data)
+            # pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
+            log(parsed_output)
+            for endpoint in self.endpoints:
+                for cdp_neighbor_index, cdp_neighbor_data in parsed_output['cdp']['index'].items():
+                    if cdp_neighbor_data['local_interface'] == endpoint.interface:
+                        endpoint.cdp_platform = cdp_neighbor_data['platform']
+                        endpoint.cdp_hostname = cdp_neighbor_data['device_id']
+                        log("Updating cdp information for " + endpoint.mac + "as " + endpoint.cdp_platform)
+        except Exception as e:
+            log("Found Exception in CDP ")
+            log(str(e))
 
 class Endpoint():
 
