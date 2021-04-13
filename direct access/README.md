@@ -1,9 +1,32 @@
 ## Usage
 
-### Step 1 - Initialize topology.yaml 
+### Step 1 - Initialize inventory.yaml 
 
-Initialize the topology.yaml 
+Initialize the inventory.yaml 
 
+```
+devices:
+  site1_switch1:
+    connections:
+      cli:
+        ip: 10.20.20.9
+        protocol: ssh
+    os: iosxe
+    type: iosxe
+  site2_switch1:
+    connections:
+      cli:
+        ip: 10.20.20.83
+        protocol: ssh
+    os: iosxe
+    type: iosxe
+testbed:
+  credentials:
+    default:
+      password: '%ASK{}'
+      username: '%ASK{}'
+
+```
 
 ### Step 2 - Populate topology.yaml
 
