@@ -3,7 +3,7 @@
 
 <p align="center">
 <a href="https://wwwin-github.cisco.com/pages/AIDE/User-Guide/"><img alt="AIDE: essentials" src="./docs/images/aide-essentials.svg"></a>
-<a href="https://cxtools.cisco.com/cxestore/#/toolDetail/53892"><img alt="CX eStore Tool ID" src="https://img.shields.io/badge/TOOL%20ID-53892-blue"></a>
+<a href="https://cxtools.cisco.com/cxestore/#/toolDetail/53661"><img alt="CX eStore Tool ID" src="https://img.shields.io/badge/TOOL%20ID-53661-blue"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 Discovery and analysis of endpoints is an essential step in planning migrations of networks from legacy environments to SDA.
