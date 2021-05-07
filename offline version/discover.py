@@ -16,7 +16,7 @@ import yaml
 import pprint
 import os
 from datetime import datetime
-
+import aide
 
 date_time_now =  datetime.now().strftime("%d_%m_:%M")
 
@@ -24,6 +24,7 @@ site = sys.argv[1]
 os.system('mkdir Reports')
 device_folder = 'Device_Outputs/'+site
 report_folder = 'Reports'
+total_endpoints = 1
 class Discover():
 
     def __init__(self):
@@ -88,6 +89,9 @@ class Discover():
 
 
        with open(report_folder+'/'+self.site+'_endpoints.csv', 'w') as f:
+           global total_endpoints
+           total_endpoints= len(self.endpoints)
+           print(total_endpoints)
            log("writing all endpoints to endpoints.csv")
            fieldnames = ['SWITCH','MAC','INTERFACE','VLAN','IP','VENDOR','CDP_PLATFORM','CDP_HOSTNAME','STATIC IP or DHCP','Cisco Comments','Customer Comments','Fabric IP (Old/New/Remove)']
            writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -140,6 +144,7 @@ class Switch():
         #with open(device_folder + '/' + self.hostname + '/show_arp.txt') as f:
         #with open(device_folder + '/'+self.hostname + '/show_arp.txt', newline='', encoding='utf16') as f:
             data = f.read()
+        pprint.pprint("Parsing show show arp from " + self.hostname)
         parsed_output = self.dev.parse('show arp', output=data)
         log(parsed_output)
         return(parsed_output['interfaces'])
@@ -158,7 +163,7 @@ class Switch():
             data = f.read()
         pprint.pprint("Parsing show mac address-table from "+ self.hostname)
         parsed_output = self.dev.parse('show mac address-table',output=data)
-        pprint.pprint(parsed_output)
+        #pprint.pprint(parsed_output)
         log(parsed_output)
         for vlan , vlan_data in parsed_output['mac_table']['vlans'].items():
             #log("ignoring internal mac addresses shown as CPU ")
@@ -192,8 +197,9 @@ class Switch():
                 data = f.read()
             log("printing cdp neighbor")
             # log(data)
+            pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
             parsed_output = self.dev.parse('show cdp neighbor', output=data)
-            # pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
+
             log(parsed_output)
             for endpoint in self.endpoints:
                 for cdp_neighbor_index, cdp_neighbor_data in parsed_output['cdp']['index'].items():
@@ -223,6 +229,8 @@ class Endpoint():
         endpoint = { 'mac' : self.mac,  'vlan' : self.vlan, 'vendor' : self.vendor}
         return endpoint
 
+
+
 def log(message):
         with open('Reports/'+site+'_endpoints_' + date_time_now + '.log', 'a') as f:
             f.write(
@@ -236,6 +244,26 @@ def log(message):
             f.write(
                 "\n---------------------------------------------------------------------------------------------------------------------- \n")
 
+def aide_telemetry():
+            project_id = input(" Enter Project ID (pid) ")
+            print(total_endpoints)
+            potential_savings = (total_endpoints ) * 0.05
+            print("Approximate hours saved ", potential_savings)
+            try:
+                aide.submit_statistics(
+                    pid=project_id,  # This should be a valid PID
+                    tool_id= 53661,
+                    metadata={
+                        "potential_savings" : potential_savings,  # Hours
+                        "report_savings" : True,
+                    },
+                )
+            except Exception:
+                pass
+
+
 if __name__ == '__main__':
     discover = Discover()
     discover.generate_report()
+    aide_telemetry()
+
