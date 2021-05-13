@@ -18,3 +18,5 @@ testbed:
     default:
       password: '%ASK{}'
       username: '%ASK{}'
+    enable: ' ' # delete this line if enable password not used
+
