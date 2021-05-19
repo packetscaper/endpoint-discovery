@@ -181,7 +181,10 @@ class Switch():
                               endpoint.interface = interface
                               endpoint.vlan = 'Vlan'+vlan
                               endpoint.switch = self.hostname
-                              endpoint.vendor = MacLookup().lookup(mac_address)
+                              try:
+                                  endpoint.vendor = MacLookup().lookup(mac_address)
+                              except:
+                                  endpoint.vendor = 'Vendor Not Found'
                               #log("Collecting information about " + mac_address +"__"+ endpoint.vendor+"on " + "Vlan" + vlan)
                               self.endpoints.append(endpoint)
 
