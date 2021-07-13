@@ -168,23 +168,38 @@ class Switch():
             if 'all' not in vlan:
                 for mac_address, mac_address_data in vlan_data['mac_addresses'].items():
 
-                    for interface, interface_data in mac_address_data.items():
-                        if 'mac_address' not in interface :
+                    try:
+                        for interface in mac_address_data["interfaces"]:
+                            if 'thernet' in interface:
 
-                          interface = list(interface_data.items())[0][0]
-                          #log("Ignoring duplicate mac addresses learnt over trunk interfaces ")
-                          if interface not in self.ignore_trunks:
+                                log("found physical interface ")
+                                physical_interface = interface
+                                # log("Ignoring duplicate mac addresses learnt over trunk interfaces ")
+                                if physical_interface not in self.ignore_trunks:
 
-                              endpoint = Endpoint(mac_address)
-                              endpoint.interface = interface
-                              endpoint.vlan = 'Vlan'+vlan
-                              endpoint.switch = self.hostname
-                              try:
-                               endpoint.vendor = MacLookup().lookup(mac_address)
-                              except :
-                                endpoint.vendor = 'Vendor Not Found'
-                              #log("Collecting information about " + mac_address +"__"+ endpoint.vendor+"on " + "Vlan" + vlan)
-                              self.endpoints.append(endpoint)
+                                    endpoint = Endpoint(mac_address)
+                                    endpoint.interface = physical_interface
+                                    endpoint.vlan = 'Vlan' + vlan
+                                    endpoint.switch = self.hostname
+                                    try:
+                                        endpoint.vendor = MacLookup().lookup(mac_address)
+                                    except:
+                                        endpoint.vendor = 'Vendor Not Found'
+                                    # log("Collecting information about " + mac_address +"__"+ endpoint.vendor+"on " + "Vlan" + vlan)
+                                    self.endpoints.append(endpoint)
+                    except:
+                        log("Did not find any drop for "+ mac_address)
+
+                        endpoint = Endpoint(mac_address)
+                        endpoint.interface = "Interface Not Found/ Drop"
+                        endpoint.vlan = 'Vlan' + vlan
+                        endpoint.switch = self.hostname
+                        try:
+                            endpoint.vendor = MacLookup().lookup(mac_address)
+                        except:
+                            endpoint.vendor = 'Vendor Not Found'
+                            # log("Collecting information about " + mac_address +"__"+ endpoint.vendor+"on " + "Vlan" + vlan)
+                        self.endpoints.append(endpoint)
 
 
 
