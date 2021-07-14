@@ -93,13 +93,15 @@ class Discover():
            total_endpoints= len(self.endpoints)
            print(total_endpoints)
            log("writing all endpoints to endpoints.csv")
-           fieldnames = ['SWITCH','MAC','INTERFACE','VLAN','IP','VENDOR','CDP_PLATFORM','CDP_HOSTNAME','STATIC IP or DHCP','Cisco Comments','Customer Comments','Fabric IP (Old/New/Remove)']
+           fieldnames = ['SWITCH','MAC','INTERFACE','VLAN','INTERFACE_SPEED','INTERFACE_TYPE','IP','VENDOR','CDP_PLATFORM','CDP_HOSTNAME','STATIC IP or DHCP','Cisco Comments','Customer Comments','Fabric IP (Old/New/Remove)']
            writer = csv.DictWriter(f, fieldnames=fieldnames)
            writer.writeheader()
            for endpoint in self.endpoints :
                dict = {'SWITCH': endpoint.switch,
                        'MAC': endpoint.mac,
                        'INTERFACE': endpoint.interface,
+                       'INTERFACE_SPEED': endpoint.interface_speed,
+                       'INTERFACE_TYPE': endpoint.interface_type,
                        'VLAN': endpoint.vlan.split('Vlan')[1],
                        'IP': endpoint.ip,
                        'VENDOR': endpoint.vendor,
@@ -129,13 +131,16 @@ class Switch():
          self.dev.custom.abstraction = {'order': ['os']}
          self.layer3_info = {}
          self.ignore_trunks = switch['trunks_to_ignore_for_mac_learn']
-
+         self.interfaces = {}
         except :
             print()
 
     def get_layer2_information(self):
+        self.get_interface_status()
+        pprint.pprint(self.interfaces)
         self.get_mac_address_table()
         self.get_cdp_neighbors()
+
 
         return self.endpoints
 
@@ -184,6 +189,14 @@ class Switch():
                                     endpoint.vlan = 'Vlan' + vlan
                                     endpoint.switch = self.hostname
                                     try:
+                                        if 'trunk' != self.interfaces['interfaces'][physical_interface]['vlan'] or 'routed' != self.interfaces['interfaces'][physical_interface]['vlan']:
+                                            endpoint.interface_type = 'access'
+                                        else:
+                                            endpoint.interface_type = self.interfaces['interfaces'][physical_interface]['vlan']
+                                    except:
+                                        endpoint.interface_speed = "not found"
+                                        endpoint.interface_type = "not found"
+                                    try:
                                         endpoint.vendor = MacLookup().lookup(mac_address)
                                     except:
                                         endpoint.vendor = 'Vendor Not Found'
@@ -196,14 +209,14 @@ class Switch():
                         endpoint.interface = "Interface Not Found/ Drop"
                         endpoint.vlan = 'Vlan' + vlan
                         endpoint.switch = self.hostname
+                        endpoint.interface_speed = "Interface Not Found/ Drop"
+                        endpoint.interface_type = "Interface Not Found/ Drop"
                         try:
                             endpoint.vendor = MacLookup().lookup(mac_address)
                         except:
                             endpoint.vendor = 'Vendor Not Found'
                             # log("Collecting information about " + mac_address +"__"+ endpoint.vendor+"on " + "Vlan" + vlan)
                         self.endpoints.append(endpoint)
-
-
 
 
     def get_cdp_neighbors(self):
@@ -229,6 +242,19 @@ class Switch():
             log("Found Exception in CDP ")
             log(str(e))
 
+    def get_interface_status(self):
+            log("Parsing show cdp neighbor from " + self.hostname)
+            file_location = 'configs/' + self.hostname + '/show_interface_status.txt'
+            with open(device_folder + '/' + self.hostname + '/show_interface_status.txt') as f:
+                # with open(device_folder + '/'+self.hostname + '/show_cdp_neighbors.txt', newline='', encoding='utf16') as f:
+                data = f.read()
+            log("printing interface")
+            # log(data)
+            pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
+            self.interfaces = self.dev.parse('show interfaces status', output=data)
+
+
+
 class Endpoint():
 
     def __init__(self,mac):
@@ -242,6 +268,8 @@ class Endpoint():
         self.device_type = None
         self.cdp_platform = None
         self.vendor = None
+        self.interface_speed = None
+        self.interface_type = None
 
     def info(self):
         endpoint = { 'mac' : self.mac,  'vlan' : self.vlan, 'vendor' : self.vendor}

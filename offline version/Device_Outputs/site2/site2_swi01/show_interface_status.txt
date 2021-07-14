@@ -1,0 +1,6 @@
+PAZ-OFC-IDFFL02-EDG-SWI-01#show interface status
+
+Port         Name               Status       Vlan       Duplex  Speed Type
+Gi1/0/16                         connected    101       a-full  a-100 100/1000/2.5GBaseTX
+Gi1/0/18                         connected    101       a-full  a-100 100/1000/2.5GBaseTX
+Gi1/0/33                         connected    101       a-full  a-100 100/1000/2.5GBaseTX
