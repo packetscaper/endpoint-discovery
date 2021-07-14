@@ -193,6 +193,7 @@ class Switch():
                                             endpoint.interface_type = 'access'
                                         else:
                                             endpoint.interface_type = self.interfaces['interfaces'][physical_interface]['vlan']
+                                        endpoint.interface_speed = self.interfaces['interfaces'][physical_interface]['port_speed']
                                     except:
                                         endpoint.interface_speed = "not found"
                                         endpoint.interface_type = "not found"
