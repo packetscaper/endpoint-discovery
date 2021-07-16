@@ -18,7 +18,7 @@ import yaml
 import pprint
 import os
 from datetime import datetime
-
+from webexteamssdk import WebexTeamsAPI
 
 date_time_now =  datetime.now().strftime("%d_%m_:%M")
 
@@ -113,9 +113,19 @@ class Discover():
                #log("writing endpoint information about "+endpoint.mac)
                writer.writerow(dict)
 
+       i = input(" Publish report via Webex Integration ? Y/N ")
+       if i == 'Y':
+             print("publishing Reports ")
+             self.publish_gen_configs()
+       else :
+               print("Output generated in Reports folder ")
 
-
-
+    def publish_gen_configs(self):
+       #os.system("zip -r "+config_dir+".zip "+ config_dir)
+       webex_api = WebexTeamsAPI(access_token=self.topology['webex']['bot_token'])
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], markdown="Publishing files for site " + site )
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints.csv'])
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints_' + date_time_now + '.log'])
 
 class Switch():
 
