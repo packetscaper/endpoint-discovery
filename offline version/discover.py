@@ -16,8 +16,8 @@ import yaml
 import pprint
 import os
 from datetime import datetime
-import aide
-
+#import aide
+from webexteamssdk import WebexTeamsAPI
 date_time_now =  datetime.now().strftime("%d_%m_:%M")
 
 site = sys.argv[1]
@@ -29,10 +29,10 @@ class Discover():
 
     def __init__(self):
         with open('topology.yaml') as f:
-            o = yaml.safe_load(f)
+            self.topology = yaml.safe_load(f)
         self.site = site
-        self.l2_switches = o['sites'][site]['devices']['l2_switches']
-        self.l3_switches = o['sites'][site]['devices']['l3_hops']
+        self.l2_switches = self.topology['sites'][site]['devices']['l2_switches']
+        self.l3_switches = self.topology['sites'][site]['devices']['l3_hops']
         self.layer2_info = {}
         self.layer3_info = {}
         self.endpoints = []
@@ -113,10 +113,20 @@ class Discover():
                        }
                #log("writing endpoint information about "+endpoint.mac)
                writer.writerow(dict)
+       i = input(" Publish report via Webex Integration ? Y/N ")
+       if i == 'Y':
+           print("publishing Reports ")
+           self.publish_gen_configs()
+       else :
+               print("Output generated in Reports folder ")
 
 
-
-
+    def publish_gen_configs(self):
+       #os.system("zip -r "+config_dir+".zip "+ config_dir)
+       webex_api = WebexTeamsAPI(access_token=self.topology['webex']['bot_token'])
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], markdown="Publishing files for site " + site )
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints.csv'])
+       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints_' + date_time_now + '.log'])
 
 class Switch():
 
@@ -283,5 +293,6 @@ def aide_telemetry():
 if __name__ == '__main__':
     discover = Discover()
     discover.generate_report()
-    aide_telemetry()
+
+    #aide_telemetry()
 
