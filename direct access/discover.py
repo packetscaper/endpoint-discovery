@@ -252,12 +252,13 @@ class Switch():
 
 
     def get_interface_status(self):
-            log("Parsing show cdp neighbor from " + self.hostname)
+            log("Parsing show interface status from " + self.hostname)
             file_location = 'configs/' + self.hostname + '/show_interface_status.txt'
             log("printing interface")
             # log(data)
-            pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
+            pprint.pprint("Parsing show interface status from " + self.hostname)
             self.interfaces = self.dev.parse('show interfaces status')
+            log(self.interfaces)
 class Endpoint():
 
     def __init__(self,mac):

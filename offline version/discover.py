@@ -147,7 +147,6 @@ class Switch():
 
     def get_layer2_information(self):
         self.get_interface_status()
-        pprint.pprint(self.interfaces)
         self.get_mac_address_table()
         self.get_cdp_neighbors()
 
@@ -254,16 +253,16 @@ class Switch():
             log(str(e))
 
     def get_interface_status(self):
-            log("Parsing show cdp neighbor from " + self.hostname)
+            log("Parsing show interface status from " + self.hostname)
             file_location = 'configs/' + self.hostname + '/show_interface_status.txt'
             with open(device_folder + '/' + self.hostname + '/show_interface_status.txt') as f:
                 # with open(device_folder + '/'+self.hostname + '/show_cdp_neighbors.txt', newline='', encoding='utf16') as f:
                 data = f.read()
             log("printing interface")
             # log(data)
-            pprint.pprint("Parsing show cdp neighbor from " + self.hostname)
+            pprint.pprint("Parsing show  interface from " + self.hostname)
             self.interfaces = self.dev.parse('show interfaces status', output=data)
-
+            log(self.interfaces)
 
 
 class Endpoint():
