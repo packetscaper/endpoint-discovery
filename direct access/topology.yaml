@@ -23,3 +23,6 @@ sites:
            - hostname: site2_swi01
              trunks_to_ignore_for_mac_learn:
                 - N/A
+webex:
+    bot_token: N2Q5M2E1ODAtMzczMy00ZjUwLTgyN2UtOGRmZjAyNDUxZmMwZmZiZjk3NWYtY2U4_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f
+    webex_room: Y2lzY29zcGFyazovL3VzL1JPT00vODBkYmY2NTAtMjkwMC0xMWViLWJhZjEtNDMxMWYzNTJlMjYz
