@@ -7,7 +7,7 @@ __license__ = "MIT"
 
 
 import sys
-
+from openpyxl import Workbook
 from genie.conf.base import Device
 import pprint
 from mac_vendor_lookup import MacLookup
@@ -16,9 +16,10 @@ import yaml
 import pprint
 import os
 from datetime import datetime
+import ipaddress
 #import aide
 from webexteamssdk import WebexTeamsAPI
-date_time_now =  datetime.now().strftime("%d_%m_:%M")
+date_time_now =  datetime.now().strftime("%d_%m_%M")
 
 site = sys.argv[1]
 os.system('mkdir Reports')
@@ -36,6 +37,8 @@ class Discover():
         self.layer2_info = {}
         self.layer3_info = {}
         self.endpoints = []
+        self.l3_interfaces = {}
+
 
 
     def update_layer2_information(self):
@@ -80,18 +83,50 @@ class Discover():
                                   endpoint.ip = neighbor_data['ip']
                                   log("Found IP of "+str(endpoint.mac)+'=====>'+str(neighbor_data['ip']) +" in "+str(endpoint.vlan))
 
+    def get_l3hop_svis(self):
+
+        for l3_switch in self.l3_switches:
+
+            log("Fetching layer 3 info from " + l3_switch['hostname'])
+            switch = Switch(l3_switch)
+            l3_ips = switch.get_l3_ip_mask()
+
+            for l3_ip in l3_ips:
+             try:
+                    network_address = ipaddress.IPv4Network(l3_ip, strict=False)
+             except:
+                    log("Cannot find network of " + l3_ip)
+             count = 0
+             for endpoint in self.endpoints:
+
+                try:
+                   endpoint_ip = ipaddress.IPv4Address(endpoint.ip)
+                   if endpoint_ip in network_address:
+                      log(endpoint.ip + " part of " + l3_ip)
+                      count = count + 1
+                except:
+                    pass
+             l3_ips[l3_ip]["endpoint_count"] = count
+
+
+            self.l3_interfaces[l3_switch["hostname"]]  = l3_ips
+            log("Updated L3 interfaces for " + l3_switch["hostname"])
+            log(self.l3_interfaces[l3_switch["hostname"]])
+
 
 
 
     def generate_report(self):
+
        self.update_layer2_information()
        self.update_layer3_information()
+       self.get_l3hop_svis()
 
 
        with open(report_folder+'/'+self.site+'_endpoints.csv', 'w') as f:
            global total_endpoints
            total_endpoints= len(self.endpoints)
-           print(total_endpoints)
+
            log("writing all endpoints to endpoints.csv")
            fieldnames = ['SWITCH','MAC','INTERFACE','VLAN','INTERFACE_SPEED','INTERFACE_TYPE','IP','VENDOR','CDP_PLATFORM','CDP_HOSTNAME','STATIC IP or DHCP','Cisco Comments','Customer Comments','Fabric IP (Old/New/Remove)']
            writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -115,6 +150,26 @@ class Discover():
                        }
                #log("writing endpoint information about "+endpoint.mac)
                writer.writerow(dict)
+       self.csv_to_xlsx(report_folder+'/'+self.site+'_endpoints.csv',report_folder + '/' + self.site + '_endpoints.xlsx')
+       with open(report_folder+'/'+self.site+'_l3_interfaces.csv', 'w') as f:
+           log("writing all l3 interfaces to l3_interfaces.csv")
+           fieldnames = ['SWITCH','INTERFACE','DESCRIPTION','IP',"ENDPOINT_COUNT"]
+           writer = csv.DictWriter(f, fieldnames=fieldnames)
+           writer.writeheader()
+           for key, data in self.l3_interfaces.items():
+
+             for key1,data1 in data.items():
+
+               dict = {'SWITCH': key,
+                       'INTERFACE': data1["interface"],
+                       'DESCRIPTION': data1["description"],
+                       'IP': key1,
+                       'ENDPOINT_COUNT': data1["endpoint_count"]
+                       }
+
+               # log("writing endpoint information about "+endpoint.mac)
+               writer.writerow(dict)
+       self.csv_to_xlsx(report_folder + '/' + self.site + '_l3_interfaces.csv',report_folder + '/' + self.site + '_l3_interfaces.xlsx')
        i = input(" Publish report via Webex Integration ? Y/N ")
        if i == 'Y':
            print("publishing Reports ")
@@ -123,27 +178,53 @@ class Discover():
                print("Output generated in Reports folder ")
 
 
+    def csv_to_xlsx(self,csv_file, xlsx_file):
+        try:
+            # Create a new Workbook and select the active sheet
+            wb = Workbook()
+            sheet = wb.active
+
+            # Read the CSV file and write its contents to the XLSX file
+            with open(csv_file, 'r', newline='') as csv_file:
+                csv_reader = csv.reader(csv_file)
+                for row_index, row in enumerate(csv_reader, start=1):
+                    for col_index, cell_value in enumerate(row, start=1):
+                        sheet.cell(row=row_index, column=col_index, value=cell_value)
+
+            # Save the data to the XLSX file
+            wb.save(xlsx_file)
+
+            log(f"Conversion successful. Data written to {xlsx_file}")
+        except FileNotFoundError:
+            log("Error: CSV file not found.")
+        except Exception as e:
+            log(f"Error: {e}")
     def publish_gen_configs(self):
        #os.system("zip -r "+config_dir+".zip "+ config_dir)
-       webex_api = WebexTeamsAPI(access_token=self.topology['webex']['bot_token'])
-       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], markdown="Publishing files for site " + site )
-       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints.csv'])
-       webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints_' + date_time_now + '.log'])
-
+       try:
+        webex_api = WebexTeamsAPI(access_token=self.topology['webex']['bot_token'])
+        webex_api.messages.create(roomId=self.topology['webex']['webex_room'], markdown="Publishing files for site " + site )
+        webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints.csv'])
+        webex_api.messages.create(roomId=self.topology['webex']['webex_room'], files=['Reports/'+site+'_endpoints_' + date_time_now + '.log'])
+       except:
+           print("Error in publishing report")
 class Switch():
 
 
     def __init__(self,switch):
-        try:
+
          self.hostname = switch['hostname']
          self.endpoints = []
          self.dev = Device(name='aName', os='ios')
          self.dev.custom.abstraction = {'order': ['os']}
          self.layer3_info = {}
-         self.ignore_trunks = switch['trunks_to_ignore_for_mac_learn']
          self.interfaces = {}
-        except :
-            print()
+         self.l3_interfaces = {}
+         try:
+             self.ignore_trunks = switch['trunks_to_ignore_for_mac_learn']
+         except:
+             pass
+
 
     def get_layer2_information(self):
         self.get_interface_status()
@@ -264,6 +345,35 @@ class Switch():
             self.interfaces = self.dev.parse('show interfaces status', output=data)
             log(self.interfaces)
 
+    def get_l3_ip_mask(self):
+        log("Parsing show interface from " + self.hostname)
+        file_location = 'configs/' + self.hostname + '/show_interface.txt'
+        with open(device_folder + '/' + self.hostname + '/show_interface.txt') as f:
+            # with open(device_folder + '/'+self.hostname + '/show_cdp_neighbors.txt', newline='', encoding='utf16') as f:
+            data = f.read()
+        log("printing interface")
+        # log(data)
+        pprint.pprint("Parsing show  interface from " + self.hostname)
+        detail_interfaces = self.dev.parse('show interfaces', output=data)
+        log(detail_interfaces)
+        for key,data in detail_interfaces.items():
+
+           interface = key
+           description = None
+           ip_addresses = None
+           try:
+            ip_addresses = data["ipv4"]
+           except:
+               pass
+           try:
+            description = data["description"]
+           except:
+               pass
+           if ip_addresses:
+               for ip_address in ip_addresses:
+                   self.l3_interfaces[ip_address] = {"interface":interface,"description":description}
+
+        return self.l3_interfaces
 
 class Endpoint():
 
