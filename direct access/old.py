@@ -26,13 +26,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--site', type=str, required=True, help="bucket")
 parser.add_argument('-f', '--file', type=str, required=True, help="Job")
 parser.add_argument('-w', '--webex', type=str, required=False, help="Webex")
-parser.add_argument('-ssh', '--ssh_options', type=str, required=False, help="SSH Options")
-
 args = parser.parse_args()
 site = args.site
 file = args.file
 webex = args.webex
-ssh_options = args.ssh_options
 
 class Discover():
 
@@ -84,23 +81,23 @@ class Discover():
             for row in sheet.iter_rows(min_row=2,values_only=True):
              if row[0]!= None:
               self.switches.append(row[0])
-            
+
             print("Connecting to switches:")
-            #for switch in self.switches:
-            #    print(switch)
+            for switch in self.switches:
+                print(switch)
 
             # Validate the structure of the input sheet
-            expected_headers = ['hostname', 'ip', 'type','os']
-            headers = [cell.value.strip().casefold() if cell.value else '' for cell in sheet[1][:4]]
+            expected_headers = ['hostname', 'ip', 'type']
+            headers = [cell.value.strip().casefold() if cell.value else '' for cell in sheet[1][:3]]
 
             if headers != expected_headers:
-                print("Invalid structure: The Excel file should have the first three columns with headers 'hostname', 'ip', 'type'.")
+                return "Invalid structure: The Excel file should have the first three columns with headers 'hostname', 'ip', 'type'."
 
             valid_types = {'layer2', 'layer3', 'layer2_layer3'}
             for row in sheet.iter_rows(min_row=2, max_col=3, values_only=True):
                 cell_values = [val.strip().casefold() if val else '' for val in row]
                 if not any(cell_value in valid_types for cell_value in cell_values):
-                    print("Invalid 'type' value(s) in row ")
+                    return f"Invalid 'type' value(s) in row "
 
             # Create a new Excel workbook for the output
             new_workbook = openpyxl.Workbook()
@@ -109,25 +106,10 @@ class Discover():
             # Add new column headers
             new_columns = ['hostname', 'ip', 'username', 'password', 'protocol', 'os']
             new_sheet.append(new_columns)
-          
+
             # Copy data and populate values in the new sheet
-            
-            for row in sheet.iter_rows(min_row=2, values_only=True):
-                row_list = list(row)
-                ip = row_list[0]
-                hostname = row_list[1]
-                os = row_list[3] 
-            
-                if str(os) == "None":
-                    os = "iosxe"
-                new_row = []
-                new_row.append(ip) 
-                new_row.append(hostname) 
-                new_row.append('ignore') 
-                new_row.append('ignore')
-                new_row.append('ssh')
-                new_row.append(os)
-                
+            for row in sheet.iter_rows(min_row=2, max_col=2, values_only=True):
+                new_row = list(row) + ['ignore', 'ignore', 'ssh', 'iosxe']
                 new_sheet.append(new_row)
 
             # Save the new Excel file as "inventory.xlsx"
@@ -146,14 +128,11 @@ class Discover():
             dict["testbed"] = {'credentials': {'default': {'username': "%ASK{}", 'password': "%ASK{}"}}}
         for device, device_data in dict["devices"].items():
             device_data.pop('credentials')
-            if ssh_options :
-             device_data["connections"]["cli"]["ssh_options"] = ssh_options
         linux_device = {'local_linux': {'os': 'linux', 'type': 'linux', 'connections': {
             'cli': {'protocols': 'ssh', 'ip': '127.0.0.1', 'command': 'bash'}}}}
         dict['devices'].update(linux_device)
         with open("testbed.yaml", 'w') as w:
             yaml.dump(dict, w)
-
 
     def generate_topology_file(self, file):
 
@@ -203,7 +182,7 @@ class Discover():
                 device_data = {'hostname': switch}
                 yaml_data['sites'][site_name]['devices']['l3_hops'].append(device_data)
 
-        
+        pprint.pprint(yaml_data)
         yaml_file = self.site+'.yaml'
         with open(yaml_file, 'w') as f:
             yaml.dump(yaml_data, f)
@@ -421,7 +400,7 @@ class Switch():
         #with open(device_folder + '/' + self.hostname + '/show_arp.txt') as f:
         #with open(device_folder + '/'+self.hostname + '/show_arp.txt', newline='', encoding='utf16') as f:
         #    data = f.read()
-        parsed_output = self.dev.parse('show ip arp')
+        parsed_output = self.dev.parse('show arp')
         log(parsed_output)
         return(parsed_output['interfaces'])
         for interface, interface_data in parsed_output['interfaces'].items():
@@ -601,4 +580,3 @@ if __name__ == '__main__':
     report_folder = 'Reports'
     discover = Discover(args.site,args.file)
     discover.generate_report()
-

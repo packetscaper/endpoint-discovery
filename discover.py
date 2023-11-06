@@ -22,17 +22,20 @@ date_time_now =  datetime.now().strftime("%d_%m_%M")
 import openpyxl
 import ipaddress
 import time
+import zipfile
 parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--site', type=str, required=True, help="bucket")
 parser.add_argument('-f', '--file', type=str, required=True, help="Job")
 parser.add_argument('-w', '--webex', type=str, required=False, help="Webex")
 parser.add_argument('-ssh', '--ssh_options', type=str, required=False, help="SSH Options")
+parser.add_argument('-o', '--offline', action="store_true", required=False, help="Offline Outputs")
 
 args = parser.parse_args()
 site = args.site
 file = args.file
 webex = args.webex
 ssh_options = args.ssh_options
+offline_flag = args.offline
 
 class Discover():
 
@@ -43,7 +46,10 @@ class Discover():
         self.connected_devices = []
         self.not_connected_devices = []
         self.process_input_file(file)
-        self.build_testbed()
+        if offline_flag:
+           self.build_offline_testbed()
+        else:
+         self.build_testbed()
         self.testbed = load('testbed.yaml')
         self.connect()
         self.generate_topology_file(file)
@@ -138,7 +144,6 @@ class Discover():
 
 
 
-
     def build_testbed(self):
         os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
         with open("testbed.yaml") as r:
@@ -154,7 +159,32 @@ class Discover():
         with open("testbed.yaml", 'w') as w:
             yaml.dump(dict, w)
 
-
+    def build_offline_testbed(self):
+        os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
+        with open("offline/mock_file.yaml") as f:
+            device_mock_file_dict = yaml.safe_load(f)
+        with open("testbed.yaml") as r:
+            dict = yaml.safe_load(r)
+            dict["testbed"] = {'credentials': {'default': {'username': "cisco", 'password': "cisco"}}}
+        for device, device_data in dict["devices"].items():
+            device_data.pop('credentials')
+            device_data["connections"].pop('cli')
+            dict["devices"][device]["connections"].update({"default":{"class":"unicon.Unicon"}})
+            if device_data["os"] == "iosxe":
+             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os iosxe --mock_data_dir ./offline/"+site+"/"+device+" --state login","protocol":"unknown"}})
+            elif device_data["os"] == "nxos":
+             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os nxos --mock_data_dir ./offline/"+site+"/"+device+" --state login","protocol":"unknown"}})   
+            else:
+                print("Unknown Device")
+            device_mock_file_dict["exec"]["prompt"] = device+"#"
+            device_mock_file_dict["prompt"] = device+"(config)#"
+            device_mock_file_dict["config_line"]["prompt"] = device+"(config-line)"
+            with open("./offline/"+site+"/"+device+"/"+device+".yaml","w") as f:
+                yaml.dump(device_mock_file_dict,f)
+        with open("testbed.yaml", 'w') as f:
+            yaml.dump(dict, f) 
+        
+           
     def generate_topology_file(self, file):
 
         # Read data from Excel using openpyxl
@@ -289,8 +319,8 @@ class Discover():
        self.update_layer3_information()
        self.get_l3hop_svis()
 
-
-       with open(report_folder+'/'+self.site+'_endpoints.csv', 'w') as f:
+     
+       with open(report_folder+"/"+self.site+"/"+self.site+'_endpoints_'+date_time_now+'.csv', 'w') as f:
            log("writing all endpoints to endpoints.csv")
            fieldnames = ['SWITCH','MAC','INTERFACE','INTERFACE_SPEED','INTERFACE_TYPE','VLAN','IP','VENDOR','CDP_PLATFORM','CDP_HOSTNAME','STATIC IP or DHCP','Cisco Comments','Customer Comments','Post-Migration-IP','Critical Endpoint']
            writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -314,9 +344,9 @@ class Discover():
                        }
                #log("writing endpoint information about "+endpoint.mac)
                writer.writerow(dict)
-       self.csv_to_xlsx(report_folder + '/' + self.site + '_endpoints.csv',
-                        report_folder + '/' + self.site + '_endpoints.xlsx')
-       with open(report_folder + '/' + self.site + '_l3_interfaces.csv', 'w') as f:
+       self.csv_to_xlsx(report_folder + '/' + self.site +'/'+self.site+ '_endpoints_'+date_time_now+'.csv',
+                        report_folder + '/' + self.site +'/'+self.site+ '_endpoints_'+date_time_now+'.xlsx')
+       with open(report_folder + '/' + self.site +'/'+self.site +'_l3_interfaces_'+date_time_now+'.csv', 'w') as f:
            log("writing all l3 interfaces to l3_interfaces.csv")
            fieldnames = ['SWITCH', 'INTERFACE', 'DESCRIPTION', 'IP', "ENDPOINT_COUNT"]
            writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -333,9 +363,9 @@ class Discover():
 
                    # log("writing endpoint information about "+endpoint.mac)
                    writer.writerow(dict)
-       self.csv_to_xlsx(report_folder + '/' + self.site + '_l3_interfaces.csv',
-                        report_folder + '/' + self.site + '_l3_interfaces.xlsx')
-
+       self.csv_to_xlsx(report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.csv',
+                        report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx')
+       os.system("rm "+report_folder + '/' + self.site + '/'+'*.csv')
        print("Reported generated successfully ")
        print("SSH to following switches was successfull")
        for switch in self.connected_devices:
@@ -373,23 +403,39 @@ class Discover():
             log(f"Error: {e}")
     def publish_gen_configs(self):
        #os.system("zip -r "+config_dir+".zip "+ config_dir)
-      try:
-       with open(webex, 'r') as f:
-           o = yaml.full_load(f)["WEBEX"]
-       if o["PROXY"]:
-        webex_api = WebexTeamsAPI(access_token=o["WEBEX_BOT_TOKEN"],proxies={"https":o["PROXY"]})
-       else:
-         webex_api = WebexTeamsAPI(access_token=o["WEBEX_BOT_TOKEN"])
+      files_to_zip = [report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx',
+                      report_folder + '/' + self.site +'/'+self.site+ '_endpoints_'+date_time_now+'.xlsx',
+                      'Reports/'+site+'/'+site +'_'+date_time_now + '.log'] 
+      output_zip_file = report_folder + '/' + self.site + '/'+self.site+'_'+date_time_now+'.zip'
 
-       #webex_api.messages.create(roomId=o["WEBEX_ROOM"], markdown="Publishing Test Result ")
+      
+      with zipfile.ZipFile(output_zip_file, 'w') as zipf:
+        for file in files_to_zip:
+         arcname = os.path.basename(file)
+         # Add each file to the zip archive
+         try:
+           zipf.write(file,arcname = arcname)
+         except:
+        
+           print("file compression failed, file not published") 
+           return     
+   
+      try:
+       with open(webex, 'r') as f:    
+        o = yaml.full_load(f)["WEBEX"]
+      
+       try:
+    
+         webex_api = WebexTeamsAPI(access_token=o["WEBEX_BOT_TOKEN"],proxies={"https":o["PROXY"]})
+        
+       except:
+         webex_api = WebexTeamsAPI(access_token=o["WEBEX_BOT_TOKEN"])
+         print("no webex proxy")
+       
        webex_api.messages.create(roomId=o["WEBEX_ROOM"], markdown="Publishing endpoint discovery data for site " + site )
        time.sleep(2)
-       webex_api.messages.create(roomId=o["WEBEX_ROOM"], files=['Reports/'+site+'_endpoints.xlsx'])
-       time.sleep(3)
-       webex_api.messages.create(roomId=o["WEBEX_ROOM"], files=['Reports/'+site+'_l3_interfaces.xlsx'])
-       time.sleep(3)
-       webex_api.messages.create(roomId=o["WEBEX_ROOM"], files=['Reports/'+site+'_endpoints_' + date_time_now + '.log'])
-
+       webex_api.messages.create(roomId=o["WEBEX_ROOM"], files=[output_zip_file])
+      
       except:
           print("Error in publishing report")
 
@@ -459,15 +505,19 @@ class Switch():
                                     endpoint.interface = physical_interface
                                     endpoint.vlan = 'Vlan' + vlan
                                     endpoint.switch = self.hostname
+                                    vlan_field = self.interfaces['interfaces'][physical_interface]['vlan']
                                     try:
-                                        if 'trunk' != self.interfaces['interfaces'][physical_interface]['vlan'] or 'routed' != self.interfaces['interfaces'][physical_interface]['vlan']:
-                                            endpoint.interface_type = 'access'
-                                        else:
-                                            endpoint.interface_type = self.interfaces['interfaces'][physical_interface]['vlan']
-                                        endpoint.interface_speed = self.interfaces['interfaces'][physical_interface]['port_speed']
+                                       try:
+                                        int(string)
+                                        endpoint.interface_type = 'access'
+                                       except:
+                                        endpoint.interface_type = vlan_field
+                                    
+                                       endpoint.interface_speed = self.interfaces['interfaces'][physical_interface]['port_speed']
                                     except:
                                         endpoint.interface_speed = "not found"
                                         endpoint.interface_type = "not found"
+                                   
                                     try:
                                         endpoint.vendor = MacLookup().lookup(mac_address)
                                     except:
@@ -520,7 +570,10 @@ class Switch():
             log("printing interface")
             # log(data)
             pprint.pprint("Parsing show interface status from " + self.hostname)
-            self.interfaces = self.dev.parse('show interfaces status')
+            if self.dev.os == 'iosxe':
+             self.interfaces = self.dev.parse('show interfaces status')
+            if self.dev.os == 'nxos':
+             self.interfaces = self.dev.parse('show interface status')
             log(self.interfaces)
 
 
@@ -582,7 +635,8 @@ class Endpoint():
         return endpoint
 
 def log(message):
-        with open('Reports/'+site+'_endpoints_' + date_time_now + '.log', 'a') as f:
+        
+        with open('Reports/'+site+'/'+site +'_'+date_time_now + '.log', 'a') as f:
             f.write(
                 "--------------------------------------------------------------------------------------------------------------------- \n")
             if type(message) != str:
@@ -598,6 +652,7 @@ if __name__ == '__main__':
 
 
     os.system('mkdir Reports')
+    os.system("mkdir Reports/"+site)
     report_folder = 'Reports'
     discover = Discover(args.site,args.file)
     discover.generate_report()

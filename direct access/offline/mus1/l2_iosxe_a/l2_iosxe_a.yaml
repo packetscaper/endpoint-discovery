@@ -1,0 +1,37 @@
+login:
+  prompt: "Username: "
+  commands:
+    "cisco":
+      new_state: password
+
+password:
+  prompt: "Password: "
+  commands:
+    "cisco":
+      new_state: exec
+
+exec:
+  prompt: l2_iosxe_a#
+  commands:
+    "term length 0": ""
+    "term width 0": ""
+    "show arp" : file|./show_arp.txt
+    "show cdp neighbors": file|./show_cdp_neighbors.txt
+    "show interface status" : file|./cmd_files/show_interface_status.txt
+    "show mac address-table": file|./cmd_files/show_mac_address-table.txt
+    "show interface": file|./cmd_files/show_interface.txt
+    "config term" :
+      new_state: config
+config:
+  prompt: l2_iosxe_a(config)#
+  commands:
+    "no logging console": ""
+    "line console 0":
+      new_state: config_line
+
+config_line:
+  prompt: "l2_iosxe_a(config-line)#"
+  commands:
+    "exec-timeout 0": ""
+    "end":
+      new_state: exec
