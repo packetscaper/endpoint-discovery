@@ -18,7 +18,7 @@ from mac_vendor_lookup import MacLookup
 from openpyxl import Workbook, load_workbook
 from webexteamssdk import WebexTeamsAPI
 import argparse
-date_time_now =  datetime.now().strftime("%d_%m_%M")
+date_time_now =  datetime.now().strftime("%d_%m_%H_%M")
 import openpyxl
 import ipaddress
 import time

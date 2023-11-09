@@ -76,13 +76,17 @@ webex.yaml
 
 ```
 python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o KexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -o HostkeyAlgorithms=+ssh-rsa"
+```
+
+
+## Offline site - cml_lab
+
 
 
 ## Reports generated
 
 
 ### Endpoint Report
-```
 
  <!-- TABLE_GENERATE_START -->
 
@@ -113,7 +117,7 @@ python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o Ke
 <!-- TABLE_GENERATE_END -->
 
 
-### Layer 3 Switch Report
+#### Layer 3 Switch Report
 
 
 | SWITCH     | INTERFACE     | DESCRIPTION     | IP               | ENDPOINT_COUNT |
