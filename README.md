@@ -81,6 +81,7 @@ python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o Ke
 
 ## Offline site - cml_lab
 
+![Alt text](https://imgur.com/GLCiDI2.png) 
 
 
 ## Reports generated
@@ -110,8 +111,6 @@ python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o Ke
 | l3_nxos_2  | 5254.0001.4e17 | Ethernet1/2        | 1000            | trunk          | 300  | 10.20.10.6  | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_nxos_2  | 5254.0012.9850 | Ethernet1/3        | 10g             | full           | 1    |             | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_nxos_2  | 5254.0011.b7d7 | Port-channel23     | 1000            | trunk          | 101  | 10.101.10.4 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_nxos_2  | 5254.0007.1873 | Ethernet1/2        | 1000            | 201            | 201  | 10.201.10.2 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_nxos_2  | 5254.0019.1a38 | Port-channel23     | 1000            | trunk          | 201  | 10.201.10.4 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 
 
 <!-- TABLE_GENERATE_END -->
