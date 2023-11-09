@@ -1,0 +1,43 @@
+config:
+  commands:
+    end:
+      new_state: exec
+    exec-timeout 0: ''
+  prompt: device_hostname(config)#
+config_line:
+  commands:
+    end:
+      new_state: exec
+    exec-timeout 0: ''
+  prompt: l3_iosxe_1(config-line)
+connect:
+  commands:
+    ? ''
+    : new_statue: execute
+  preface: 'Trying mock device ... Connected to mock_device Escape character is '
+  prompt: ' '
+exec:
+  commands:
+    config term:
+      new_state: config
+    show cdp neighbors: file|./show_cdp_neighbors.txt
+    show interface: file|./show_interface.txt
+    show interface status: file|./show_interface_status.txt
+    show interfaces: file|./show_interface.txt
+    show interfaces status: file|./show_interface_status.txt
+    show ip arp: file|./show_ip_arp.txt
+    show mac address-table: file|./show_mac_address-table.txt
+    term length 0: ''
+    term width 0: ''
+  prompt: l3_iosxe_1#
+login:
+  commands:
+    cisco:
+      new_state: password
+  prompt: 'Username: '
+password:
+  commands:
+    cisco:
+      new_state: exec
+  prompt: 'Password: '
+prompt: l3_iosxe_1(config)#

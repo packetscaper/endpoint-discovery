@@ -1,0 +1,14 @@
+l2_iosxe_1#sh cdp neighbor
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+l3_iosxe_2       Gig 0/1           152             R S I            Gig 0/0
+l3_iosxe_1       Gig 0/0           172             R S I            Gig 0/0
+inserthostname-here
+                 Gig 0/2           136             R S I            Gig 0/0
+inserthostname-here
+                 Gig 0/3           172             R S I            Gig 0/1
+
+Total cdp entries displayed : 4
