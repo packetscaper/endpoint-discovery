@@ -1,0 +1,34 @@
+l2_iosxe_1#show mac address-table
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    5206.7e1a.1b08    DYNAMIC     Gi0/0
+   1    5254.000d.2708    DYNAMIC     Po23
+   1    5254.0017.1b57    DYNAMIC     Gi0/1
+   1    5254.0019.2a8e    DYNAMIC     Po23
+   1    5254.001b.f2c7    DYNAMIC     Gi0/0
+ 100    0000.0c07.ac64    DYNAMIC     Gi0/0
+ 100    5254.0009.94e7    DYNAMIC     Gi1/0
+ 100    5254.0009.cb0e    DYNAMIC     Gi1/1
+ 100    5254.000d.742e    DYNAMIC     Gi1/2
+ 100    5254.0010.a31a    DYNAMIC     Po23
+ 100    5254.0013.0485    DYNAMIC     Po23
+ 100    5254.0017.8064    DYNAMIC     Gi0/0
+ 100    5254.001b.8064    DYNAMIC     Gi0/0
+ 100    5254.001b.f2c7    DYNAMIC     Gi0/0
+ 200    0000.0c07.acc8    DYNAMIC     Gi0/0
+ 200    5254.000f.d7c2    DYNAMIC     Gi2/1
+ 200    5254.0017.80c8    DYNAMIC     Gi0/0
+ 200    5254.001b.80c8    DYNAMIC     Gi0/0
+ 200    5254.001b.f2c7    DYNAMIC     Gi0/0
+ 101    5254.001b.f2c7    DYNAMIC     Gi0/0
+ 201    5254.001b.f2c7    DYNAMIC     Gi0/0
+ 300    5254.0011.4d9b    DYNAMIC     Gi0/0
+ 300    5254.0015.ce16    DYNAMIC     Gi0/0
+ 300    5254.0017.812c    DYNAMIC     Gi0/0
+ 300    5254.001b.812c    DYNAMIC     Gi0/0
+ 300    5254.001b.f2c7    DYNAMIC     Gi0/0
+Total Mac Addresses for this criterion: 26
+l2_iosxe_1#

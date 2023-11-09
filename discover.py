@@ -24,11 +24,11 @@ import ipaddress
 import time
 import zipfile
 parser = argparse.ArgumentParser()
-parser.add_argument('-s', '--site', type=str, required=True, help="bucket")
-parser.add_argument('-f', '--file', type=str, required=True, help="Job")
-parser.add_argument('-w', '--webex', type=str, required=False, help="Webex")
-parser.add_argument('-ssh', '--ssh_options', type=str, required=False, help="SSH Options")
-parser.add_argument('-o', '--offline', action="store_true", required=False, help="Offline Outputs")
+parser.add_argument('--site', type=str, required=True, help="Site name")
+parser.add_argument('--file', type=str, required=True, help="Input filename")
+parser.add_argument('--webex', type=str, required=False, help="Webex file for publishing")
+parser.add_argument('--ssh_options', type=str, required=False, help="SSH Options for old ciphers")
+parser.add_argument('--offline', action="store_true", required=False, help="Offline sites")
 
 args = parser.parse_args()
 site = args.site
@@ -148,20 +148,19 @@ class Discover():
         os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
         with open("testbed.yaml") as r:
             dict = yaml.safe_load(r)
-            dict["testbed"] = {'credentials': {'default': {'username': "%ASK{}", 'password': "%ASK{}"}}}
+            dict["testbed"] = {'credentials': {'default': {'password': "%ASK{}",'username': "%ASK{}", }}}
         for device, device_data in dict["devices"].items():
             device_data.pop('credentials')
             if ssh_options :
              device_data["connections"]["cli"]["ssh_options"] = ssh_options
-        linux_device = {'local_linux': {'os': 'linux', 'type': 'linux', 'connections': {
-            'cli': {'protocols': 'ssh', 'ip': '127.0.0.1', 'command': 'bash'}}}}
-        dict['devices'].update(linux_device)
+      
         with open("testbed.yaml", 'w') as w:
             yaml.dump(dict, w)
+        os.system("rm inventory.xlsx")
 
     def build_offline_testbed(self):
         os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
-        with open("offline/mock_file.yaml") as f:
+        with open("offline_sites/mock_file.yaml") as f:
             device_mock_file_dict = yaml.safe_load(f)
         with open("testbed.yaml") as r:
             dict = yaml.safe_load(r)
@@ -171,16 +170,20 @@ class Discover():
             device_data["connections"].pop('cli')
             dict["devices"][device]["connections"].update({"default":{"class":"unicon.Unicon"}})
             if device_data["os"] == "iosxe":
-             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os iosxe --mock_data_dir ./offline/"+site+"/"+device+" --state login","protocol":"unknown"}})
+             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os iosxe --mock_data_dir ./offline_sites/"+site+"/"+device+" --state login","protocol":"unknown"}})
             elif device_data["os"] == "nxos":
-             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os nxos --mock_data_dir ./offline/"+site+"/"+device+" --state login","protocol":"unknown"}})   
+             dict["devices"][device]["connections"].update({"a":{"command" : "mock_device_cli --os nxos --mock_data_dir ./offline_sites/"+site+"/"+device+" --state login","protocol":"unknown"}})   
             else:
                 print("Unknown Device")
             device_mock_file_dict["exec"]["prompt"] = device+"#"
             device_mock_file_dict["prompt"] = device+"(config)#"
             device_mock_file_dict["config_line"]["prompt"] = device+"(config-line)"
-            with open("./offline/"+site+"/"+device+"/"+device+".yaml","w") as f:
+            try:
+             with open("./offline_sites/"+site+"/"+device+"/"+device+".yaml","w") as f:
                 yaml.dump(device_mock_file_dict,f)
+            except:
+                print("No outputs found for device "+ device)
+                log("No outputs found for device "+ device)
         with open("testbed.yaml", 'w') as f:
             yaml.dump(dict, f) 
         
@@ -494,7 +497,7 @@ class Switch():
 
                     try:
                         for interface in mac_address_data["interfaces"]:
-                            if 'thernet' in interface or 'Gig' in interface:
+                            if 'thernet' in interface or 'Gig' in interface or 'Port-channel' in interface :
 
                                 log("found physical interface ")
                                 physical_interface = interface
@@ -592,7 +595,10 @@ class Switch():
 
         # log(data)
         pprint.pprint("Parsing show  interface from " + self.hostname)
-        detail_interfaces = self.dev.parse('show interfaces', )
+        if self.dev.os == 'iosxe':
+         detail_interfaces = self.dev.parse('show interfaces',timeout = 200 )
+        if self.dev.os == 'nxos':
+         detail_interfaces = self.dev.parse('show interface', timeout = 200 )   
         log(detail_interfaces)
         for key, data in detail_interfaces.items():
 

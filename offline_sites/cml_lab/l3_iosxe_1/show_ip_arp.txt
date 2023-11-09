@@ -1,0 +1,23 @@
+l3_iosxe_1#        show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.10.55.1             14   5254.0015.ce16  ARPA   Vlan1
+Internet  10.10.55.35             -   5254.001b.8001  ARPA   Vlan1
+Internet  10.10.55.36           151   5254.0017.8001  ARPA   Vlan1
+Internet  10.10.55.37           141   5254.0008.8001  ARPA   Vlan1
+Internet  10.10.55.38             1   5206.7e1a.1b08  ARPA   Vlan1
+Internet  10.20.10.0              3   5254.0015.ce16  ARPA   Vlan300
+Internet  10.20.10.1              -   5254.001b.812c  ARPA   Vlan300
+Internet  10.100.10.3             0   5254.0009.94e7  ARPA   Vlan100
+Internet  10.100.10.4           249   5254.0009.cb0e  ARPA   Vlan100
+Internet  10.100.10.5           244   5254.000d.742e  ARPA   Vlan100
+Internet  10.100.10.6             2   5254.0016.4925  ARPA   Vlan100
+Internet  10.100.10.7           242   5254.0010.a31a  ARPA   Vlan100
+Internet  10.100.10.8             5   5254.0013.0485  ARPA   Vlan100
+Internet  10.100.10.253           -   5254.001b.8064  ARPA   Vlan100
+Internet  10.100.10.254         256   5254.0017.8064  ARPA   Vlan100
+Internet  10.200.10.2             0   5254.000f.d7c2  ARPA   Vlan200
+Internet  10.200.10.3             0   5254.0013.2603  ARPA   Vlan200
+Internet  10.200.10.6            99   5254.000a.415a  ARPA   Vlan200
+Internet  10.200.10.253           -   5254.001b.80c8  ARPA   Vlan200
+Internet  10.200.10.254         193   5254.0017.80c8  ARPA   Vlan200
+l3_iosxe_1#

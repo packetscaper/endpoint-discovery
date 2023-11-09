@@ -1,0 +1,46 @@
+login:
+  prompt: "Username: "
+  commands:
+    "cisco":
+      new_state: password
+
+password:
+  prompt: "Password: "
+  commands:
+    "cisco":
+      new_state: exec
+connect:
+  commands:
+   ? ''
+   : new_statue: execute
+  preface: "Trying mock device ...
+      Connected to mock_device
+      Escape character is "
+  prompt: ' '
+exec:
+  prompt: device_hostname#
+  commands:
+    "term length 0": ""
+    "term width 0": ""
+    "show ip arp" : file|./show_ip_arp.txt
+    "show cdp neighbors": file|./show_cdp_neighbors.txt
+    "show interfaces": file|./show_interface.txt
+    "show interfaces status" : file|./show_interface_status.txt
+    "show interface status" : file|./show_interface_status.txt
+    "show mac address-table": file|./show_mac_address-table.txt
+    "show interface": file|./show_interface.txt
+    "config term" :
+      new_state: config
+config:
+  prompt: device_hostname(config)#
+  commands:
+    end:
+      new_state: exec
+    exec-timeout 0: ''
+  
+config_line:
+  prompt: "device_hostname(config-line)#"
+  commands:
+    "exec-timeout 0": ""
+    "end":
+      new_state: exec
