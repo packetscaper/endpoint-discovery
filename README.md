@@ -81,7 +81,7 @@ python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o Ke
 
 ## Offline site - cml_lab
 
-![Alt text](https://imgur.com/GLCiDI2) 
+![Alt text](https://imgur.com/GLCiDI2.png) 
 
 
 ## Reports generated
