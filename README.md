@@ -18,6 +18,17 @@ Follow below instructions to setup the environment for running the script.
 
 Python <= 3.10.X
 
+
+## Installation
+
+Setup virtual environment (optional)
+```
+python3 -m venv endpoint-discovery
+source endpoint-discovery/bin/activate
+
+```
+Install python dependencies
+
 ```
 pip3 install -r requirements.txt 
 
