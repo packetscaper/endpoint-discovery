@@ -7,7 +7,8 @@
 Discovery and analysis of endpoints is an essential step in planning migrations of networks from legacy environments to SDA.
 This script helps in gathering endpoint information from legacy network
 
-More Details here [https://cisco-my.sharepoint.com/:p:/r/personal/umahar_cisco_com/Documents/Presentations/Endpoint-Discovery/endpoint-discover.pptx?d=w7c9755a9419c422695a893fcb34481af&csf=1&web=1&e=HDL17e]
+More details [here]( https://cisco-my.sharepoint.com/:p:/r/personal/umahar_cisco_com/Documents/Presentations/Endpoint-Discovery/endpoint-discover.pptx?d=w7c9755a9419c422695a893fcb34481af&csf=1&web=1&e=HDL17e )
+
 
 ## Getting Started
 
@@ -15,7 +16,7 @@ Follow below instructions to setup the environment for running the script.
 
 ## Prerequisites
 
-Python 3.x
+Python <= 3.10.X
 
 ```
 pip3 install -r requirements.txt 
@@ -90,7 +91,15 @@ python3 discover.py --site site_name --file seed_file.xlsx  --ssh_options " -o K
 
 ## Offline site - cml_lab
 
+Test Site
+
 ![Alt text](https://imgur.com/GLCiDI2.png) 
+
+
+CML Topology
+
+
+![Alt text](https://imgur.com/9rACpj0.png) 
 
 
 ## Reports generated
