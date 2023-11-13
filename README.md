@@ -7,7 +7,7 @@
 Discovery and analysis of endpoints is an essential step in planning migrations of networks from legacy environments to SDA.
 This script helps in gathering endpoint information from legacy network
 
-More Details [here] (https://cisco-my.sharepoint.com/:p:/r/personal/umahar_cisco_com/Documents/Presentations/Endpoint-Discovery/endpoint-discover.pptx?d=w7c9755a9419c422695a893fcb34481af&csf=1&web=1&e=HDL17e)
+More Details [here](https://cisco-my.sharepoint.com/:p:/r/personal/umahar_cisco_com/Documents/Presentations/Endpoint-Discovery/endpoint-discover.pptx?d=w7c9755a9419c422695a893fcb34481af&csf=1&web=1&e=HDL17e)
 
 
 ## Getting Started
