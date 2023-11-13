@@ -52,6 +52,14 @@ options:
 
 ```
 
+### Structure of seed file
+
+
+| hostname   | ip           | type          | os    |
+|------------|--------------|---------------|-------|
+| l3_iosxe_1 | 10.104.55.35 | layer2_layer3 | iosxe |
+| l2_iosxe_1 | 10.104.55.37 | layer2        | iosxe |
+
 ### Example 1 - Standard scenario
 
 ```
@@ -99,6 +107,16 @@ webex.yaml
 python3 discover.py --site site_name --file seed_file.xlsx  --ssh_options " -o KexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -o HostkeyAlgorithms=+ssh-rsa"
 ```
 
+## Quick Test for offline cml_lab topology
+
+```
+python3 -m venv endpoint-discovery
+source endpoint-discovery/bin/activate
+```
+
+```
+python3 discover.py --site cml_lab --file cml_lab_seed_file.xlsx --offline 
+```
 
 ## Offline site - cml_lab
 
@@ -111,6 +129,9 @@ CML Topology
 
 
 ![Alt text](https://imgur.com/9rACpj0.png) 
+
+
+
 
 
 ## Reports generated
