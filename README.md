@@ -7,8 +7,7 @@
 Discovery and analysis of endpoints is an essential step in planning migrations of networks from legacy environments to SDA.
 This script helps in gathering endpoint information from legacy network
 
-
-
+More Details here [https://cisco-my.sharepoint.com/:p:/r/personal/umahar_cisco_com/Documents/Presentations/Endpoint-Discovery/endpoint-discover.pptx?d=w7c9755a9419c422695a893fcb34481af&csf=1&web=1&e=HDL17e]
 
 ## Getting Started
 
@@ -41,7 +40,7 @@ options:
 
 ```
 
-### Example 1
+### Example 1 - Standard scenario
 
 ```
 python3 discover.py --site site_name --file seed_file.xlsx 
@@ -49,14 +48,20 @@ python3 discover.py --site site_name --file seed_file.xlsx
 ```
 
 
-### Example 2
+### Example 2 - No ability to run the script in customer's environment
+
+-  Create a folder under offline_sites. Folder name should be the same as the site name
+-  Copy outputs of the devices. Follow the format of the test site - cml_labs. 
+   
+
+
 
 ```
 python3 discover.py --site site_name --file seed_file.xlsx --offline 
 
 ```
 
-### Example 3
+### Example 3 - Publish reports using webex apis in a webx teamspace
 
 ```
 python3 discover.py --site site_name --file seed_file.xlsx --webex webex.yaml 
@@ -72,10 +77,14 @@ webex.yaml
 ```
 
 
-### Example 4
+### Example 4 - SSH to devices running old IOS or older ciphers
+
+- Use --ssh_options " "
+- Try various options to see what works in your environment
+- Below example works for IOS and NXOS devices in CML 
 
 ```
-python3 discover.py --site site_name --file seed_file.xlsx  -ssh_options " -o KexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -o HostkeyAlgorithms=+ssh-rsa"
+python3 discover.py --site site_name --file seed_file.xlsx  --ssh_options " -o KexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -o HostkeyAlgorithms=+ssh-rsa"
 ```
 
 
