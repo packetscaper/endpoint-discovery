@@ -109,6 +109,8 @@ python3 discover.py --site site_name --file seed_file.xlsx  --ssh_options " -o K
 
 ## Quick Test for offline cml_lab topology
 
+The offline site cml_lab has 2 switches
+
 ```
 python3 -m venv endpoint-discovery
 source endpoint-discovery/bin/activate
@@ -118,9 +120,9 @@ source endpoint-discovery/bin/activate
 python3 discover.py --site cml_lab --file cml_lab_seed_file.xlsx --offline 
 ```
 
-## Offline site - cml_lab
+##  Topology Tested with this script - cml_lab
 
-Test Site
+
 
 ![Alt text](https://imgur.com/GLCiDI2.png) 
 
