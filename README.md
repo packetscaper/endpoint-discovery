@@ -107,6 +107,23 @@ webex.yaml
 python3 discover.py --site site_name --file seed_file.xlsx  --ssh_options " -o KexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -o HostkeyAlgorithms=+ssh-rsa"
 ```
 
+## Demo
+
+### Initializing script 
+![Alt text](https://imgur.com/oojQbib.gif) 
+
+
+
+
+
+### Data Gathering 
+![Alt text](https://imgur.com/QVWyxhf.gif) 
+
+
+
+### Final Report
+![Alt text](https://imgur.com/GSLJ1ps.gif) 
+
 ## Quick Test for offline cml_lab topology
 
 The offline site cml_lab has 2 switches
@@ -119,6 +136,9 @@ source endpoint-discovery/bin/activate
 ```
 python3 discover.py --site cml_lab --file cml_lab_seed_file.xlsx --offline 
 ```
+
+
+
 
 ##  Topology Tested with this script - cml_lab
 
@@ -146,20 +166,20 @@ CML Topology
 | SWITCH     | MAC            | INTERFACE          | INTERFACE_SPEED | INTERFACE_TYPE | VLAN | IP          | VENDOR           | CDP_PLATFORM | CDP_HOSTNAME | STATIC IP or DHCP | Cisco Comments | Customer Comments | Post-Migration-IP | Critical Endpoint |
 |------------|----------------|--------------------|-----------------|----------------|------|-------------|------------------|--------------|--------------|-------------------|----------------|-------------------|-------------------|-------------------|
 | l3_iosxe_1 | 5254.0015.ce16 | GigabitEthernet0/2 | auto            | trunk          | 1    | 10.10.55.1  | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l3_iosxe_1 | 5254.0016.4925 | GigabitEthernet1/0 | auto            | 100            | 100  | 10.100.10.6 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l3_iosxe_1 | 5254.0013.2603 | GigabitEthernet1/1 | auto            | 200            | 200  | 10.200.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l3_iosxe_1 | 5254.0016.4925 | GigabitEthernet1/0 | auto            | access            | 100  | 10.100.10.6 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l3_iosxe_1 | 5254.0013.2603 | GigabitEthernet1/1 | auto            | access            | 200  | 10.200.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l3_iosxe_1 | 5254.0015.ce16 | GigabitEthernet0/2 | auto            | trunk          | 300  | 10.20.10.0  | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_iosxe_1 | 5254.000d.2708 | Port-channel23     | auto            | trunk          | 1    |             | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_iosxe_1 | 5254.0019.2a8e | Port-channel23     | auto            | trunk          | 1    |             | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_iosxe_1 | 5254.0009.94e7 | GigabitEthernet1/0 | auto            | 100            | 100  | 10.100.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_iosxe_1 | 5254.0009.cb0e | GigabitEthernet1/1 | auto            | 100            | 100  | 10.100.10.4 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_iosxe_1 | 5254.000d.742e | GigabitEthernet1/2 | auto            | 100            | 100  | 10.100.10.5 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l2_iosxe_1 | 5254.0009.94e7 | GigabitEthernet1/0 | auto            | access             | 100  | 10.100.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l2_iosxe_1 | 5254.0009.cb0e | GigabitEthernet1/1 | auto            | access             | 100  | 10.100.10.4 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l2_iosxe_1 | 5254.000d.742e | GigabitEthernet1/2 | auto            | access             | 100  | 10.100.10.5 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_iosxe_1 | 5254.0010.a31a | Port-channel23     | auto            | trunk          | 100  | 10.100.10.7 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_iosxe_1 | 5254.0013.0485 | Port-channel23     | auto            | trunk          | 100  | 10.100.10.8 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_iosxe_1 | 5254.000f.d7c2 | GigabitEthernet2/1 | auto            | 200            | 200  | 10.200.10.2 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l2_nxos_1  | 5254.000a.415a | Ethernet1/4        | 1000            | 200            | 200  | 10.200.10.6 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l3_nxos_2  | 5254.001c.cf91 | Ethernet1/4        | 1000            | 101            | 101  | 10.101.10.2 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
-| l3_nxos_2  | 5254.000d.42ed | Ethernet1/6        | 1000            | 201            | 201  | 10.201.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l2_iosxe_1 | 5254.000f.d7c2 | GigabitEthernet2/1 | auto            | access             | 200  | 10.200.10.2 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l2_nxos_1  | 5254.000a.415a | Ethernet1/4        | 1000            | access             | 200  | 10.200.10.6 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l3_nxos_2  | 5254.001c.cf91 | Ethernet1/4        | 1000            | access             | 101  | 10.101.10.2 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
+| l3_nxos_2  | 5254.000d.42ed | Ethernet1/6        | 1000            | access             | 201  | 10.201.10.3 | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l3_nxos_2  | 5254.0001.4e17 | Ethernet1/2        | 1000            | trunk          | 300  | 10.20.10.6  | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_nxos_2  | 5254.0012.9850 | Ethernet1/3        | 10g             | full           | 1    |             | Vendor Not Found |              |              |                   |                |                   |                   |                   |
 | l2_nxos_2  | 5254.0011.b7d7 | Port-channel23     | 1000            | trunk          | 101  | 10.101.10.4 | Vendor Not Found |              |              |                   |                |                   |                   |                   |

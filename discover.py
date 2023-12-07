@@ -369,6 +369,13 @@ class Discover():
        self.csv_to_xlsx(report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.csv',
                         report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx')
        os.system("rm "+report_folder + '/' + self.site + '/'+'*.csv')
+       endpoint_report = report_folder + '/' + self.site +'/'+self.site+ '_endpoints_'+date_time_now+'.xlsx'
+       l3_report = report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx'
+       output_file = report_folder + '/' + self.site + '/'+self.site+"_"+date_time_now 
+       
+       self.merge_excel_sheets(endpoint_report,l3_report,output_file+".xlsx")
+       os.system(f"rm {l3_report}")
+       os.system(f"rm {endpoint_report}")
        print("Reported generated successfully ")
        print("SSH to following switches was successfull")
        for switch in self.connected_devices:
@@ -384,6 +391,8 @@ class Discover():
 
 
     def csv_to_xlsx(self, csv_file, xlsx_file):
+    
+    
         try:
             # Create a new Workbook and select the active sheet
             wb = Workbook()
@@ -404,6 +413,44 @@ class Discover():
             log("Error: CSV file not found.")
         except Exception as e:
             log(f"Error: {e}")
+    
+    def merge_excel_sheets(self,input_file1, input_file2, output_file):
+     try:
+        # Load the first workbook and get the first sheet
+        workbook1 = openpyxl.load_workbook(input_file1)
+        sheet1 = workbook1.active
+
+        # Load the second workbook and get the first sheet
+        workbook2 = openpyxl.load_workbook(input_file2)
+        sheet2 = workbook2.active
+
+        # Create a new workbook
+        new_workbook = openpyxl.Workbook()
+
+        # Create the first worksheet "endpoints" and copy the contents
+        new_sheet1 = new_workbook.create_sheet(title="endpoints")
+        for row in sheet1.iter_rows(min_row=1, max_row=sheet1.max_row, min_col=1, max_col=sheet1.max_column):
+            new_sheet1.append([cell.value for cell in row])
+
+        # Create the second worksheet "l3_interfaces" and copy the contents
+        new_sheet2 = new_workbook.create_sheet(title="l3_interfaces")
+        for row in sheet2.iter_rows(min_row=1, max_row=sheet2.max_row, min_col=1, max_col=sheet2.max_column):
+            new_sheet2.append([cell.value for cell in row])
+
+        # Remove the default sheets created by openpyxl
+        new_workbook.remove(new_workbook["Sheet"])
+        
+
+        # Save the new workbook
+        new_workbook.save(output_file)
+
+        print("Merging completed successfully!")
+
+     except Exception as e:
+        print(f"Error: {e}")
+
+# Example usage
+
     def publish_gen_configs(self):
        #os.system("zip -r "+config_dir+".zip "+ config_dir)
       files_to_zip = [report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx',
@@ -511,7 +558,7 @@ class Switch():
                                     vlan_field = self.interfaces['interfaces'][physical_interface]['vlan']
                                     try:
                                        try:
-                                        int(string)
+                                        int(vlan_field)
                                         endpoint.interface_type = 'access'
                                        except:
                                         endpoint.interface_type = vlan_field
