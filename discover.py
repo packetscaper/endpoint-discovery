@@ -453,8 +453,7 @@ class Discover():
 
     def publish_gen_configs(self):
        #os.system("zip -r "+config_dir+".zip "+ config_dir)
-      files_to_zip = [report_folder + '/' + self.site + '/'+self.site+'_l3_interfaces_'+date_time_now+'.xlsx',
-                      report_folder + '/' + self.site +'/'+self.site+ '_endpoints_'+date_time_now+'.xlsx',
+      files_to_zip = [report_folder + '/' + self.site +'/'+self.site+'_'+date_time_now+'.xlsx',
                       'Reports/'+site+'/'+site +'_'+date_time_now + '.log'] 
       output_zip_file = report_folder + '/' + self.site + '/'+self.site+'_'+date_time_now+'.zip'
 
@@ -464,9 +463,8 @@ class Discover():
          arcname = os.path.basename(file)
          # Add each file to the zip archive
          try:
-           zipf.write(file,arcname = arcname)
+          zipf.write(file,arcname = arcname)
          except:
-        
            print("file compression failed, file not published") 
            return     
    
