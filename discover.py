@@ -525,12 +525,6 @@ class Switch():
 
     def get_mac_address_table(self):
         log("Parsing show mac address-table from " + self.hostname)
-        #with open(device_folder + '/' + self.hostname + '/show_mac_address-table.txt', 'rb') as f:
-
-        #with open(device_folder+'/'+self.hostname+'/show_mac_address-table.txt') as f:
-        #with open(device_folder + '/' + self.hostname + '/show_mac_address-table.txt', encoding='utf8', errors='ignore') as f:
-        #with open(device_folder + '/'+self.hostname + '/show_mac_address-table.txt', newline='', encoding='utf16') as f:
-        #    data = f.read()
         pprint.pprint("Parsing show mac address-table from "+ self.hostname)
         parsed_output = self.dev.parse('show mac address-table',)
         pprint.pprint(parsed_output)
