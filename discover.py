@@ -7,8 +7,7 @@ __license__ = "MIT"
 
 import csv
 import os
-import pprint
-import pprint
+import pprint,requests
 import sys
 import yaml
 from datetime import datetime
@@ -45,6 +44,8 @@ class Discover():
         self.device_connection_objs = {}
         self.connected_devices = []
         self.not_connected_devices = []
+        if args.webex:
+           self.download_file()        
         self.process_input_file(file)
         if offline_flag:
            self.build_offline_testbed()
@@ -145,6 +146,7 @@ class Discover():
 
 
     def build_testbed(self):
+      
         os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
         with open("testbed.yaml") as r:
             dict = yaml.safe_load(r)
@@ -159,6 +161,7 @@ class Discover():
         os.system("rm inventory.xlsx")
 
     def build_offline_testbed(self):
+      
         os.system("pyats create testbed file --path inventory.xlsx --output testbed.yaml")
         with open("offline_sites/mock_file.yaml") as f:
             device_mock_file_dict = yaml.safe_load(f)
@@ -486,7 +489,32 @@ class Discover():
       
       except:
           print("Error in publishing report")
+    def download_file(self):
+        try:
 
+         with open(webex, 'r') as f:    
+          o = yaml.full_load(f)["WEBEX"]
+          api = WebexTeamsAPI(access_token=o["WEBEX_BOT_TOKEN"])
+          messages = api.messages.list(roomId=o["1_1_BOT_ROOM_ID"])
+          for message in messages:
+            if message.files:
+              print(message)
+              break
+          headers = { 'Authorization': f'Bearer {o["WEBEX_BOT_TOKEN"]}'} 
+          file_url =  message.files[0]
+          response = requests.get(file_url, headers=headers, stream=True)
+          file_name = message.text.split(" ")[1]
+          with open(file_name,"wb") as file:
+           file.write(response.content)
+          print(f"Downloaded file {file_name}")
+        except Exception as e :
+           print(e)
+           print(f"Couldn't download file from webex room")
+         
+
+
+
+        
 class Switch():
 
 
