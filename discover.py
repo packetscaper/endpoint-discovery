@@ -663,9 +663,9 @@ class Switch():
         # log(data)
         pprint.pprint("Parsing show  interface from " + self.hostname)
         if self.dev.os == 'iosxe':
-         detail_interfaces = self.dev.parse('show interfaces',timeout = 200 )
+         detail_interfaces = self.dev.parse('show interfaces',timeout = 500 )
         if self.dev.os == 'nxos':
-         detail_interfaces = self.dev.parse('show interface', timeout = 200 )   
+         detail_interfaces = self.dev.parse('show interface', timeout = 500 )   
         log(detail_interfaces)
         for key, data in detail_interfaces.items():
 
