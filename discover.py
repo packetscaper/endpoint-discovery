@@ -296,7 +296,7 @@ class Discover():
           log("Fetching layer 3 info from " + l3_switch['hostname'])
           if l3_switch['hostname'] in self.connected_devices:
             switch = Switch(l3_switch,self.device_connection_objs[l3_switch['hostname']])
-            l3_ips = switch.get_l3_ip_mask()
+            l3_ips = switch.get_l3_ip_mask_modified()
 
             for l3_ip in l3_ips:
                 try:
@@ -659,15 +659,68 @@ class Switch():
 
     def get_l3_ip_mask(self):
         log("Parsing show interface from " + self.hostname)
-
+        
         # log(data)
         pprint.pprint("Parsing show  interface from " + self.hostname)
         if self.dev.os == 'iosxe':
-         detail_interfaces = self.dev.parse('show interfaces',timeout = 500 )
+         detail_interfaces = self.dev.parse('show interfaces',timeout = 5000 )
         if self.dev.os == 'nxos':
-         detail_interfaces = self.dev.parse('show interface', timeout = 500 )   
+         detail_interfaces = self.dev.parse('show interface', timeout = 5000 )   
         log(detail_interfaces)
         for key, data in detail_interfaces.items():
+
+            interface = key
+            description = None
+            ip_addresses = None
+            try:
+                ip_addresses = data["ipv4"]
+            except:
+                pass
+            try:
+                description = data["description"]
+            except:
+                pass
+            if ip_addresses:
+                for ip_address in ip_addresses:
+                    self.l3_interfaces[ip_address] = {"interface": interface, "description": description}
+
+        return self.l3_interfaces
+
+    def get_l3_ip_mask_modified(self):
+        log("Parsing show interface from " + self.hostname)
+        interfaces_with_ips = []
+        ip_brief = self.dev.parse("show ip interface brief")
+        for interface,data in ip_brief["interface"].items():
+            if data["ip_address"] != "unassigned":
+             interfaces_with_ips.append(interface)
+        # log(data)
+             
+        
+
+        pprint.pprint("Parsing show  interface from " + self.hostname)
+        if self.dev.os == 'iosxe':
+         log(interfaces_with_ips)
+         for interface in interfaces_with_ips:
+            data = self.dev.parse(f"show interface {interface}")[interface]
+            log(data)
+            interface = interface
+            description = None
+            ip_addresses = None
+            try:
+                ip_addresses = data["ipv4"]
+            except:
+                pass
+            try:
+                description = data["description"]
+            except:
+                pass
+            if ip_addresses:
+                for ip_address in ip_addresses:
+                    self.l3_interfaces[ip_address] = {"interface": interface, "description": description}
+        if self.dev.os == 'nxos':
+         detail_interfaces = self.dev.parse('show interface', timeout = 5000 )   
+         log(detail_interfaces)
+         for key, data in detail_interfaces.items():
 
             interface = key
             description = None
